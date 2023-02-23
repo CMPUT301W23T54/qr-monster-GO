@@ -31,13 +31,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
             startActivity(intent);
         }
-        
         signUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
                 // Add if statement that checks if the username has been taken by going through firebase collection of players
-                
                 //This bit goes in the else. Also add the database part which stored this new players username in the collection
                 SharedPreferences.Editor login = sharedPreferences.edit();
                 login.putString(key, username.getText().toString());
