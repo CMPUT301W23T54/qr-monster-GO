@@ -27,10 +27,13 @@
         <activity
             android:name=".ScanCodeActivity"
             android:label="CodeScanningActivity"
-            android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation">
+        </activity>
     </application>
-
 </manifest>
