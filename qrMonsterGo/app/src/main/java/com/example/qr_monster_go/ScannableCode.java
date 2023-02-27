@@ -1,11 +1,11 @@
 package com.example.qr_monster_go;
 
-public class Code {
+public class ScannableCode {
 
     String code;
     int score;
 
-    public Code(String code) {
+    public ScannableCode(String code) {
         this.code = code;
         //calculate score in the constructor
         score = calculate_score(code);
