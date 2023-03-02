@@ -8,6 +8,9 @@ public class QRCode extends ScannableCode {
     public QRCode(String code) {
         super(code);
     }
+
+
+
     public int getCodeHashing(){
 
         return 0;
