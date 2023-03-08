@@ -13,31 +13,27 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
     @Override
     public void addElement(QrMonsterGoDB db, Player object) {
-        DataStorageController.super.addElement(db, object);
     }
 
     @Override
     public void removeElement(QrMonsterGoDB db, Player object) {
-        DataStorageController.super.removeElement(db, object);
     }
 
     @Override
     public void editElement(QrMonsterGoDB db, Player object) {
-        DataStorageController.super.editElement(db, object);
     }
 
     @Override
     public Player getElementOfId(QrMonsterGoDB db, String username) {
-        return DataStorageController.super.getElementOfId(db, username);
+        return null;
     }
 
     @Override
     public ArrayList<Player> getSearchResultList(QrMonsterGoDB db, String searchKeywords) {
-        return DataStorageController.super.getSearchResultList(db, searchKeywords);
+        return null;
     }
 
     @Override
     public void sortElement() {
-        DataStorageController.super.sortElement();
     }
 }

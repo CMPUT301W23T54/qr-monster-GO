@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public interface DataStorageController<T> {
 
-    public default void addElement(QrMonsterGoDB db, T object) {}
+    void addElement(QrMonsterGoDB db, T object) ;
 
-    public default void removeElement(QrMonsterGoDB db, T object) {}
+    void removeElement(QrMonsterGoDB db, T object);
 
-    public default void editElement(QrMonsterGoDB db, T object){}
+    void editElement(QrMonsterGoDB db, T object);
 
-    public default T getElementOfId(QrMonsterGoDB db, String username){ return null; }
+    T getElementOfId(QrMonsterGoDB db, String username);
 
-    public default ArrayList<T> getSearchResultList(QrMonsterGoDB db, String searchKeywords){ return null; }
+    ArrayList<T> getSearchResultList(QrMonsterGoDB db, String searchKeywords);
 
-    public default void sortElement(){}
+    void sortElement();
 
 
 
