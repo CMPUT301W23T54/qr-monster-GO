@@ -44,7 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
         SearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //Search users activity
+                startActivity(new Intent(HomePageActivity.this, SearchUsersActivity.class));
             }
         });
 
