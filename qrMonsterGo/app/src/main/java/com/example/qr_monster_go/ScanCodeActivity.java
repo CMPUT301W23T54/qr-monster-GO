@@ -34,18 +34,20 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             String hashValue = Hashing.sha256()
                     .hashString(content, StandardCharsets.UTF_8)
                     .toString();
-            Log.d(hashValue, "scanResultData: ");
+
+            // create new ScannableCode object from the contents of the scanned code
             ScannableCode code = new ScannableCode(hashValue);
-            //new ConfirmLocationDialog().show(getSupportFragmentManager(), "hfsdfs");
         }
         else {
+            // display toast with No Results message
             Toast.makeText(this, "No Results", Toast.LENGTH_LONG).show();
         }
     }
-    @Override
-    public void setLocationChoice() {
-        this.addLocation = true;
-    }
+
+//    @Override --implement later--
+//    public void setLocationChoice() {
+//        this.addLocation = true;
+//    }
 
 
     @Override
@@ -61,6 +63,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             }
         });
 
+        // return to home page if back button is pressed
         returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +74,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     }
 
     private void scanCode() {
+        // create new ScanFragment to scan a code
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
         ScanFragment scanFragment = new ScanFragment();
