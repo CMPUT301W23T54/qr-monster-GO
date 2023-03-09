@@ -1,6 +1,10 @@
 package com.example.qr_monster_go;
 
 
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Collection;
 
 public class QrMonsterGoDB {
