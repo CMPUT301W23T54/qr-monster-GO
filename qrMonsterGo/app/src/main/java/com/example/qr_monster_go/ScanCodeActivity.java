@@ -3,21 +3,25 @@ package com.example.qr_monster_go;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureActivity;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 
 
 public class ScanCodeActivity extends AppCompatActivity implements ScanResultReceiver {
     Button scanButton;
+    ImageButton returnButton;
     boolean addLocation = false;
     boolean addImage = false;
 
@@ -25,7 +29,14 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     public void scanResultData(String codeFormat, String content) {
         if (content != null) {
             Toast.makeText(this, content, Toast.LENGTH_LONG).show();
-            new ConfirmLocationDialog().show(getSupportFragmentManager(), "hfsdfs");
+
+            // generate SHA-256 hash of code
+            String hashValue = Hashing.sha256()
+                    .hashString(content, StandardCharsets.UTF_8)
+                    .toString();
+            Log.d(hashValue, "scanResultData: ");
+            ScannableCode code = new ScannableCode(hashValue);
+            //new ConfirmLocationDialog().show(getSupportFragmentManager(), "hfsdfs");
         }
         else {
             Toast.makeText(this, "No Results", Toast.LENGTH_LONG).show();
@@ -47,6 +58,14 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             @Override
             public void onClick(View view) {
                 scanCode();
+            }
+        });
+
+        returnButton = findViewById(R.id.return_button);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ScanCodeActivity.this, HomePageActivity.class));
             }
         });
     }
