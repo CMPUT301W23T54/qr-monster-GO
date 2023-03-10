@@ -12,6 +12,8 @@ public class ScannableCode {
     String name;
     ArrayList<Player> playerList;
 
+    String geolocation;  //for now geolocation is represented as a string
+
 
     public ScannableCode(String code) {
         this.code = code;
@@ -19,6 +21,7 @@ public class ScannableCode {
         this.score = calculate_score(this.code);
         this.name = generateName(this.code.substring(0, 2)); // only pass in first 2 characters(all that is needed for name generation)
         this.playerList = new ArrayList<Player>();
+        this.geolocation = "";
 
     }
 
@@ -121,5 +124,8 @@ public class ScannableCode {
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
+
+    public String getGeolocation() { return geolocation; }
+
 
 }
