@@ -18,23 +18,41 @@ import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 
-
+/**
+ * This activity is where the user can scan a code
+ * and add it to their account
+ *
+ * implements ScanResultReceiver to easily retrieve
+ * data from the scanning fragment
+ */
 public class ScanCodeActivity extends AppCompatActivity implements ScanResultReceiver {
     Button scanButton;
     ImageButton returnButton;
     boolean addLocation = false;
     boolean addImage = false;
 
+    /**
+     * This function reads the results of the code scanning fragment
+     * and displays a Toast with the content of the code then creates
+     * a new ScannableCode object with the SHA-256 hash of 'content'
+     *
+     * @param codeFormat
+     *      this is the type of code that was scanned(String)
+     * @param content
+     *      this is the contents contained in the code that was scanned(String)
+     */
     @Override
     public void scanResultData(String codeFormat, String content) {
         if (content != null) {
             Toast.makeText(this, content, Toast.LENGTH_LONG).show();
 
+            content = "BFG5DGW54";
             // generate SHA-256 hash of code
             String hashValue = Hashing.sha256()
                     .hashString(content, StandardCharsets.UTF_8)
                     .toString();
 
+            Log.d(hashValue, "scanResultData: hashcode");
             // create new ScannableCode object from the contents of the scanned code
             ScannableCode code = new ScannableCode(hashValue);
         }

@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class represents a scanned code object that players can collect
+ * On creation this class generates a score and name based on
+ * a SHA-256 hash from a scanned codes contents
+ */
 public class ScannableCode {
     String code;
     int score;
@@ -25,6 +30,16 @@ public class ScannableCode {
 
     }
 
+    /**
+     * This function generates a scanned codes score based
+     * on its SHA-256 hash
+     *
+     * @param code
+     *      This is an SHA-256 hash of a scanned codes contents
+     *
+     * @return
+     *      Returns the calculated score(int)
+     */
     public int calculate_score(String code){
         List<String> repeats = getRepeats(code);
         double score = 0;
@@ -68,7 +83,16 @@ public class ScannableCode {
         return repeats;
     }
 
-    private String generateName(String code) {
+    /**
+     * This function generates a name based on the contents of
+     * the SHA-256 hash of a scanned codes contents
+     *
+     * @param code
+     *      This is an SHA-256 hash of a scanned codes contents
+     * @return
+     *      Returns the generated name(String)
+     */
+    public String generateName(String code) {
         // name mapping arrays
         ArrayList<String> names0 = new ArrayList<>(
                 Arrays.asList("cool", "Fro", "Mo", "Mega", "Spectral", "Crab"));
