@@ -109,7 +109,8 @@ public class ScannableCode {
     }
 
 
-
-
+    public String getName() {
+        return name;
+    }
 
 }
