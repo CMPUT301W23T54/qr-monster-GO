@@ -46,13 +46,11 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         if (content != null) {
             Toast.makeText(this, content, Toast.LENGTH_LONG).show();
 
-            content = "BFG5DGW54";
             // generate SHA-256 hash of code
             String hashValue = Hashing.sha256()
                     .hashString(content, StandardCharsets.UTF_8)
                     .toString();
 
-            Log.d(hashValue, "scanResultData: hashcode");
             // create new ScannableCode object from the contents of the scanned code
             ScannableCode code = new ScannableCode(hashValue);
         }
