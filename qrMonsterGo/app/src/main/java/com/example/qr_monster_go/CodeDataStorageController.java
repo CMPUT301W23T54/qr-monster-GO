@@ -3,7 +3,6 @@ package com.example.qr_monster_go;
 import static android.content.ContentValues.TAG;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,22 +14,19 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CodeDataStorageController implements DataStorageController<ScannableCode>{
 
     QrMonsterGoDB db;
+
+
     public CodeDataStorageController(QrMonsterGoDB establishedDB) {
         this.db = establishedDB;
     }
-
     @Override
     public void addElement( ScannableCode code) {
         CollectionReference codeCollectionReference = db.getCollectionReference("CodeCollection");
@@ -53,8 +49,8 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                         }
                     }
                 });
-
     }
+
 
     @Override
     public void removeElement( String code) {
@@ -74,6 +70,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                 });
 
     }
+
 
 
     public void removePlayerFromPlayerList(String code, String username){
@@ -109,20 +106,32 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                     Log.w(TAG, "Error getting snap", e);
                 }
             });//on failure listener
-    }
+    }//method
+
+
+    public ArrayList<String> getPlayerWhoHasCode(String code){
+        getElementOfId(code).getScore();
+        return null;
+    }//getPlayerWhoHasCode
 
     @Override
     public void editElement( ScannableCode code, String key) {
-
-
-
-    }
+    }//editElement
 
     @Override
-    public ScannableCode getElementOfId( String username) {
+    public ScannableCode getElementOfId(String codeId) {
+        final ScannableCode[] code = new ScannableCode[1];
+        DocumentReference codeRef = db.getDocumentReference(codeId,"CodeCollection");
+        codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                code[0] = documentSnapshot.toObject(ScannableCode.class);
+            }
+        });
+        return code[0];
+    }//getElementOfId
 
-        return null;
-    }
+
 
     @Override
     public ArrayList<ScannableCode> getSearchResultList( String searchKeywords) {
@@ -132,4 +141,12 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
     @Override
     public void sortElement() {
     }
+
+
+
+
+
+
+
+
 }
