@@ -6,9 +6,9 @@ public interface DataStorageController<T> {
 
     void addElement( T object) ;
 
-    void removeElement( T object);
+    void removeElement( String objectId);
 
-    void editElement( T object);
+    void editElement( T object, String key);
 
     T getElementOfId( String username);
 

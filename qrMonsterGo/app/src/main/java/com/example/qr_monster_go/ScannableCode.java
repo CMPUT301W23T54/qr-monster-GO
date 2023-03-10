@@ -10,12 +10,16 @@ public class ScannableCode {
     String code;
     int score;
     String name;
+    ArrayList<Player> playerList;
+
 
     public ScannableCode(String code) {
         this.code = code;
         //calculate score in the constructor
         this.score = calculate_score(this.code);
         this.name = generateName(this.code.substring(0, 2)); // only pass in first 2 characters(all that is needed for name generation)
+        this.playerList = new ArrayList<Player>();
+
     }
 
     public int calculate_score(String code){
@@ -111,6 +115,11 @@ public class ScannableCode {
 
     public String getName() {
         return name;
+    }
+
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
 
 }

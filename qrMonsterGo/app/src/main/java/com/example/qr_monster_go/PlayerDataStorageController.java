@@ -13,14 +13,16 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
     @Override
     public void addElement( Player object) {
+
+
     }
 
     @Override
-    public void removeElement( Player object) {
+    public void removeElement( String playerId) {
     }
 
     @Override
-    public void editElement( Player object) {
+    public void editElement( Player object, String key) {
     }
 
     @Override
