@@ -31,7 +31,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
     public boolean isCodeAlreadyScanned(String code){
 
-        final boolean[] isAlreadyScanned = {false};
+        boolean[] isAlreadyScanned = {false};
 
         db.getDocumentReference(code, "CodeCollection")
                 .get()
@@ -65,11 +65,12 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
         curCodeMap.put("codeNameKey", code.getName());
         curCodeMap.put("codePlayerList", code.getPlayerList());
 
-        codeCollectionReference
-                .add(curCodeMap)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        DocumentReference doc = codeCollectionReference.document(code.getCode());
+
+        doc.set(curCodeMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Log.d("RRG", "document is successfully added");
                         }else{
@@ -77,6 +78,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                         }
                     }
                 });
+
     }//addElement
 
 
