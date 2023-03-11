@@ -37,7 +37,10 @@ public class HomePageActivity extends AppCompatActivity {
         ScanCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomePageActivity.this, ScanCodeActivity.class));
+                Intent intent = new Intent(HomePageActivity.this, ScanCodeActivity.class);
+                intent.putExtra("username", sharedPreferences.getString(key, null));
+
+                startActivity(intent);
             }
         });
 
