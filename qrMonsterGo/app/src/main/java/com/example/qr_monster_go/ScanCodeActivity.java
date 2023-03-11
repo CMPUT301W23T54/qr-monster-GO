@@ -1,7 +1,9 @@
 package com.example.qr_monster_go;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.SharedPreferencesKt;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -53,6 +56,15 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
             // create new ScannableCode object from the contents of the scanned code
             ScannableCode code = new ScannableCode(hashValue);
+
+            CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
+
+            if (dc.isCodeAlreadyScanned(code.getCode())) {
+                // update player list of code
+            }
+            else {
+                dc.addElement(code);
+            }
         }
         else {
             // display toast with No Results message

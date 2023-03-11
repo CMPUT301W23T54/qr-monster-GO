@@ -122,6 +122,10 @@ public class ScannableCode {
         return builder.toString();
     }
 
+    public void addPlayer(String player) {
+        this.playerList.add(player);
+    }
+
     public String getCode() {
         return code;
     }
