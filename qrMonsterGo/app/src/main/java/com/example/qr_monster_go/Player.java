@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.List;
 
+// progress so far
 public class Player {
     private String userName;
     private String email;
