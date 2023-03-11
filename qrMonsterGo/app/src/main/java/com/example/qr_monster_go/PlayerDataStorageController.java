@@ -4,6 +4,7 @@ package com.example.qr_monster_go;
 import static android.content.ContentValues.TAG;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +14,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +28,8 @@ public class PlayerDataStorageController implements DataStorageController<Player
     public PlayerDataStorageController(QrMonsterGoDB establishedDatabase) {
         this.db = establishedDatabase;
     }
+
+
 
     @Override
     public void addElement( Player player) {
@@ -67,9 +72,13 @@ public class PlayerDataStorageController implements DataStorageController<Player
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
-
     }
 
+
+
+    public void getSearchedPlayerByUsername(){
+
+    }
 
 
     @Override
@@ -78,6 +87,11 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
     @Override
     public Player getElementOfId( String username) {
+        return null;
+    }
+
+    @Override
+    public Player getElementOfKey(String key, String value) {
         return null;
     }
 
