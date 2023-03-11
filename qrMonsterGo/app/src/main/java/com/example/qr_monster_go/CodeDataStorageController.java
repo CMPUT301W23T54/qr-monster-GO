@@ -23,10 +23,38 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
     QrMonsterGoDB db;
 
-
     public CodeDataStorageController(QrMonsterGoDB establishedDB) {
         this.db = establishedDB;
     }
+
+
+
+    public boolean isCodeAlreadyScanned(String code){
+
+        final boolean[] isAlreadyScanned = {false};
+
+        db.getDocumentReference(code, "CodeCollection")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Document found in the offline cache
+                             isAlreadyScanned[0] = task.getResult().exists();
+
+                            Log.d(TAG, "Cached document data" );
+                        } else {
+                            Log.d(TAG, "Cached get failed: ", task.getException());
+                        }
+                    }
+                });
+        return isAlreadyScanned[0];
+    }//isCodeAlreadyScanned
+
+    /**
+     * @param code - the code object to be added to the database
+     *
+     */
     @Override
     public void addElement( ScannableCode code) {
         CollectionReference codeCollectionReference = db.getCollectionReference("CodeCollection");
@@ -49,7 +77,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                         }
                     }
                 });
-    }
+    }//addElement
 
 
     @Override
@@ -68,8 +96,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
-
-    }
+    }//removeElement
 
 
 
@@ -114,6 +141,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
     public void editElement( ScannableCode code, String key) {
     }//editElement
 
+
     @Override
     public ScannableCode getElementOfId(String codeId) {
         final ScannableCode[] code = new ScannableCode[1];
@@ -126,6 +154,15 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
         });
         return code[0];
     }//getElementOfId
+
+
+    @Override
+    public ScannableCode getElementOfKey(String key, String value) {
+
+        return null;
+
+    }
+
 
     public ArrayList<String> getPlayerWhoHasCode(String code){
         return getElementOfId(code).getPlayerList();

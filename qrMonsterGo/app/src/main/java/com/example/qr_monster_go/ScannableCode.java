@@ -15,8 +15,7 @@ public class ScannableCode {
     String code;
     int score;
     String name;
-    ArrayList<String> playerList;
-
+    ArrayList<String> playerList;  //stores the players who have Scanned the code
     String geolocation;  //for now geolocation is represented as a string
 
 
