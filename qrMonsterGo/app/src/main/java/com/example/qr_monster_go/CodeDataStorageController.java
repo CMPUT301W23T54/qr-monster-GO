@@ -109,10 +109,6 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
     }//method
 
 
-    public ArrayList<String> getPlayerWhoHasCode(String code){
-        getElementOfId(code).getScore();
-        return null;
-    }//getPlayerWhoHasCode
 
     @Override
     public void editElement( ScannableCode code, String key) {
@@ -131,12 +127,15 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
         return code[0];
     }//getElementOfId
 
-
+    public ArrayList<String> getPlayerWhoHasCode(String code){
+        return getElementOfId(code).getPlayerList();
+    }//getPlayerWhoHasCode
 
     @Override
     public ArrayList<ScannableCode> getSearchResultList( String searchKeywords) {
         return null;
     }
+
 
     @Override
     public void sortElement() {

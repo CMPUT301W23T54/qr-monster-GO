@@ -79,7 +79,6 @@ public class SearchUsersActivity extends AppCompatActivity {
                                     Toast.makeText(SearchUsersActivity.this, "No results", Toast.LENGTH_LONG).show();
                                 }
                             }
-                            return null;
                         }
                     });
                 }
