@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public class PlayerDataStorageController implements DataStorageController<Player>{
 
-    QrMonsterGoDB db;
+    private QrMonsterGoDB db;
 
     public PlayerDataStorageController(QrMonsterGoDB establishedDatabase) {
         this.db = establishedDatabase;
@@ -76,6 +77,29 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
 
 
+    public boolean checkUserNameExists(String username){
+
+        final boolean[] isAlreadyScanned = {false};
+
+        db.getDocumentReference(username, "CodeCollection")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Document found in the offline cache
+                            isAlreadyScanned[0] = task.getResult().exists();
+
+                            Log.d(TAG, "Cached document data" );
+                        } else {
+                            Log.d(TAG, "Cached get failed: ", task.getException());
+                        }
+                    }
+                });
+        return isAlreadyScanned[0];
+
+    }//checkUserNameExists
+
     public void getSearchedPlayerByUsername(){
 
     }
@@ -83,6 +107,9 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
     @Override
     public void editElement( Player object, String key) {
+
+
+
     }
 
     @Override

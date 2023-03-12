@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class CodeDataStorageController implements DataStorageController<ScannableCode>{
 
-    QrMonsterGoDB db;
+    private QrMonsterGoDB db;
 
     public CodeDataStorageController(QrMonsterGoDB establishedDB) {
         this.db = establishedDB;
@@ -31,7 +31,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
     public boolean isCodeAlreadyScanned(String code){
 
-        final boolean[] isAlreadyScanned = {false};
+        boolean[] isAlreadyScanned = {false};
 
         db.getDocumentReference(code, "CodeCollection")
                 .get()
@@ -144,7 +144,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
     @Override
     public ScannableCode getElementOfId(String codeId) {
-        final ScannableCode[] code = new ScannableCode[1];
+        ScannableCode[] code = new ScannableCode[1];
         DocumentReference codeRef = db.getDocumentReference(codeId,"CodeCollection");
         codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
