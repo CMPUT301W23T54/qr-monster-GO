@@ -25,6 +25,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     EditText username;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 // Get a top level reference to the collection
                 final CollectionReference usersRef = db.collection("users");
                 // query Firebase if the entry exists
-                Query queryUsersByName = usersRef.whereEqualTo("name", userNameEntry);
+                Query queryUsersByName = usersRef.whereEqualTo("name".toLowerCase(), userNameEntry.toLowerCase());
 
                 // add listener
                 queryUsersByName

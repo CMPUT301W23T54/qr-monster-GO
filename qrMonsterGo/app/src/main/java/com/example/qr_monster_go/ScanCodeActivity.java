@@ -1,7 +1,9 @@
 package com.example.qr_monster_go;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.SharedPreferencesKt;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -51,6 +54,18 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
             // create new QRCode object from the contents of the scanned code
             QRCode code = new QRCode(hashValue);
+
+            CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
+
+            if (dc.isCodeAlreadyScanned(code.getCode())) {
+                // 1. check if player has already scanned code
+                // 2. if not: add player to codes player list here
+            }
+            else {
+                // add username to codes player list then add code to the database
+                code.addPlayer(getIntent().getExtras().getString("username"));
+                dc.addElement(code);
+            }
         }
         else {
             // display toast with No Results message

@@ -92,15 +92,20 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
         curCodeMap.put("name", code.getName());
         curCodeMap.put("playerList", code.getPlayerList());
 
-        codeCollectionReference
-                .add(curCodeMap)
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        Log.d("RRG", "document is successfully added");
-                    }else{
-                        Log.d("RRG", "something went wrong");
+        DocumentReference doc = codeCollectionReference.document(code.getCode());
+
+        doc.set(curCodeMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d("RRG", "document is successfully added");
+                        }else{
+                            Log.d("RRG", "something went wrong");
+                        }
                     }
                 });
+
     }//addElement
 
 
