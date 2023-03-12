@@ -1,23 +1,19 @@
 package com.example.qr_monster_go;
 
+import static android.content.ContentValues.TAG;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import java.util.HashMap;
+
 import java.util.List;
 
 // progress so far
@@ -27,9 +23,8 @@ public class Player {
     private String phone;
     private Integer totalScore;
     private Integer totalScannedCodes;
-    private List<QRCode> codeList;
+    private List<String> savedCodeList;
 
-    final String TAG = "tag";
     FirebaseFirestore db;
 
     /**
@@ -93,12 +88,12 @@ public class Player {
         return 0;
     }
 
-    public List<QRCode> getCodeList() {
-        return this.codeList;
+    public List<String> getSavedCodeList() {
+        return this.savedCodeList;
     }
 
-    public void setCodeList(List<QRCode> codeList) {
-        this.codeList = codeList;
+    public void setSavedCodeList(List<String> savedCodeList) {
+        this.savedCodeList = savedCodeList;
     }
 
     /**

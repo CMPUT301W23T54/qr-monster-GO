@@ -14,7 +14,7 @@ import java.util.Collection;
 
 public class QrMonsterGoDB {
 
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
 
     public QrMonsterGoDB() {
 

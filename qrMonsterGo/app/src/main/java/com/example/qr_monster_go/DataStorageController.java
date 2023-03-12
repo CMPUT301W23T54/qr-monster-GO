@@ -5,6 +5,8 @@ import java.util.ArrayList;
 /**
  * @param <T> the generic object that is stored in database
  *           This is an interface of generic database management classes.
+ *           It helps manage the data from the database.
+ *           It is implemented by concrete data concroller classes.
  */
 public interface DataStorageController<T> {
 

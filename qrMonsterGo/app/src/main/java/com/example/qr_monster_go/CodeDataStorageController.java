@@ -19,6 +19,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is CodeDataStorageController class
+ * It builds an interface for the exchange of data
+ * between the local machine and remote database
+ * It has several methods either to add, delete, modify, query data from the
+ * CodeCollection in QrMonsterGo database
+ */
 public class CodeDataStorageController implements DataStorageController<QRCode>{
 
     private QrMonsterGoDB db;
@@ -99,7 +106,38 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
     }//removeElement
 
 
+    @Override
+    public QRCode getElementOfId(String codeId) {
+        QRCode[] code = new QRCode[1];
+        DocumentReference codeRef = db.getDocumentReference(codeId,"CodeCollection");
+        codeRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        code[0] = documentSnapshot.toObject(QRCode.class);
+                    }
+                })//onSuccess
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error getting document", e);
+                    }
+                });//onFailure
+        return code[0];
+    }//getElementOfId
 
+
+
+    public ArrayList<QRCode> getCodeListScannedByPlayer(String username){
+        
+        return null;
+
+    }
+
+
+
+
+    /**
     public void removePlayerFromPlayerList(String code, String username){
         DocumentReference codeRef = db.getDocumentReference("code","CodeCollection");
         codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -133,7 +171,11 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
                     Log.w(TAG, "Error getting snap", e);
                 }
             });//on failure listener
-    }//method
+    }//
+
+
+
+*/
 
 
 
@@ -142,18 +184,6 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
     }//editElement
 
 
-    @Override
-    public QRCode getElementOfId(String codeId) {
-        QRCode[] code = new QRCode[1];
-        DocumentReference codeRef = db.getDocumentReference(codeId,"CodeCollection");
-        codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                code[0] = documentSnapshot.toObject(QRCode.class);
-            }
-        });
-        return code[0];
-    }//getElementOfId
 
 
     @Override
