@@ -29,41 +29,30 @@ import java.util.Map;
  */
 public class PlayerDataStorageController implements DataStorageController<Player>{
 
-    private QrMonsterGoDB db;
+    final private QrMonsterGoDB db; //the QRMonsterGoDB associated with the data controller.
 
-    public PlayerDataStorageController(QrMonsterGoDB establishedDatabase) {
-        this.db = establishedDatabase;
+    /**
+     * @param establishedDB - the established database in the process
+     *
+     *  This is the constructor for CodeDataStorageController class.
+     *  It takes in a QRMonsterGoDB object and construct a data controller
+     *  using it to access the database created.
+     */
+    public PlayerDataStorageController(QrMonsterGoDB establishedDB) {
+        this.db = establishedDB;
     }
 
 
 
-    @Override
-    public void addElement( Player player) {
-        CollectionReference playerCollectionReference = db.getCollectionReference("PlayerCollection");
-        Map<String, Object> curPlayerMap = new HashMap<>();
-
-        curPlayerMap.put("Username", player.getUserName());
-        curPlayerMap.put("Email", player.getEmail());
-        curPlayerMap.put("Phone", player.getPhone());
-        curPlayerMap.put("TotalScore", player.getTotalScore());
-        curPlayerMap.put("Total#Scan", player.getTotalScannedCodes());
-        curPlayerMap.put("SavedCodes", player.getSavedCodeList());
-
-        playerCollectionReference
-                .add(curPlayerMap)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if(task.isSuccessful()){
-                            Log.d("RRG", "document is successfully added");
-                        }else{
-                            Log.d("RRG", "something went wrong");
-                        }
-                    }
-                });
-    }//addElement
-
-
+    /**
+     * @param username - the username of the Player that needs to check if already exist in DB
+     * @return  -  whether player with the same username is already in the DB
+     *
+     *  This is  a method that takes in the username of a Player and checks if the
+     *  document is already in the database.
+     *  Note: It is designed to be used together with the other methods in the class
+     *        to prevent carrying out operations on a non-existent document.
+     */
     public boolean ifUserNameExists(String username){
         boolean[] isAlreadyScanned = {false};
 
@@ -85,6 +74,53 @@ public class PlayerDataStorageController implements DataStorageController<Player
     }//checkUserNameExists
 
 
+
+    /**
+     * @param player - the Player object to be added to the database
+     *
+     *  This is a method that takes in a Player object and Stores
+     *  it in the PlayerCollection in the database.
+     *  Beware: the method does not check whether the document already exists in the database.
+     *          It will report an error if adding something with the same id.
+     */
+    @Override
+    public void addElement( Player player) {
+        CollectionReference playerCollectionReference = db.getCollectionReference("PlayerCollection");
+        Map<String, Object> curPlayerMap = new HashMap<>();
+
+        curPlayerMap.put("username", player.getUsername());
+        curPlayerMap.put("email", player.getEmail());
+        curPlayerMap.put("phone", player.getPhone());
+        curPlayerMap.put("totalScore", player.getTotalScore());
+        curPlayerMap.put("totalScannedCodes", player.getTotalScannedCodes());
+        curPlayerMap.put("savedCodeList", player.getSavedCodeList());
+
+        playerCollectionReference
+                .add(curPlayerMap)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if(task.isSuccessful()){
+                            Log.d("RRG", "document is successfully added");
+                        }else{
+                            Log.d("RRG", "something went wrong");
+                        }
+                    }
+                });
+    }//addElement
+
+
+
+     /**
+     * @param username - the player username that is needed to objectify
+     * @return - the Player object that is fetched from the database
+     *
+     *  This is a method that takes in the username of the Player
+     *  and returns the Player object that corresponds to the username
+     *  recorded in the database.
+     *  Beware: the method does not check whether the document exists in the database.
+     *          It will report an error if fetching something not yet recorded.
+     */
     @Override
     public Player getElementOfId(String username) {
         Player[] player = new Player[1];
@@ -107,11 +143,13 @@ public class PlayerDataStorageController implements DataStorageController<Player
 
 
     /**
-     * This is a method that receives playerId and codeId and delete that code from the player's
-     * codeList in the Database.
-     *
      * @param username - the username of the Player who wants to delete a code from their account
      * @param code - the hashString of the code that player wants to delete from their account
+     *
+     *  This is a method that receives playerId and codeId and delete that code from the player's
+     *  codeList in the Database.
+     *  Beware: the method does not check whether the player or code exists in the database.
+     *          It will report an error if deleting something not yet recorded.
      */
     public void removeCodeFromPlayerAccount(String username, String code){
         DocumentReference playerRef = db.getDocumentReference(username,"PlayerCollection");
@@ -137,12 +175,7 @@ public class PlayerDataStorageController implements DataStorageController<Player
     }
 
 
-
-
-
-
-    @Override
-    public void editElement( Player object, String key) {
+    public void editUsername(){
 
 
     }

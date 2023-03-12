@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public interface DataStorageController<T> {
 
+
     /**
      * This is a method that adds an object to the database
      * @param object the generic object that needs to be added to the database
@@ -23,8 +24,6 @@ public interface DataStorageController<T> {
      */
     void removeElement(String objectId);
 
-
-    void editElement(T object, String key);
 
     /**
      * @param value

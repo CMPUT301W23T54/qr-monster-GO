@@ -18,7 +18,7 @@ import java.util.List;
 
 // progress so far
 public class Player {
-    private String userName;
+    private String username;
     private String email;
     private String phone;
     private Integer totalScore;
@@ -36,18 +36,18 @@ public class Player {
     /**
      * constructor with a player's username
      *
-     * @param userName
+     * @param username
      */
-    public Player(String userName) {
-        this.userName = userName;
+    public Player(String username) {
+        this.username = username;
     }
 
-    public String getUserName() {
-        return this.userName;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -92,20 +92,20 @@ public class Player {
         return this.savedCodeList;
     }
 
+
     public void setSavedCodeList(List<String> savedCodeList) {
         this.savedCodeList = savedCodeList;
     }
 
     /**
      * populate Player class properties from Firebase Players collection queried by username
-     */
     public void populateFromFirebase() {
         // Access a Cloud Firestore instance
         db = FirebaseFirestore.getInstance();
         // Get a top level reference to the collection
         final CollectionReference usersRef = db.collection("Players");
         // query Firebase by username
-        Query queryByUserName = usersRef.whereEqualTo("username", this.userName);
+        Query queryByUserName = usersRef.whereEqualTo("username", this.username);
 
         // add listener
         queryByUserName
@@ -142,6 +142,9 @@ public class Player {
                     }
                 }); //addOnCompleteListener
     }
+
+
+     */
 
 }
 
