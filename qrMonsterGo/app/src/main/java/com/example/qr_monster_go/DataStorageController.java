@@ -5,8 +5,11 @@ import java.util.ArrayList;
 /**
  * @param <T> the generic object that is stored in database
  *           This is an interface of generic database management classes.
+ *           It helps manage the data from the database.
+ *           It is implemented by concrete data concroller classes.
  */
 public interface DataStorageController<T> {
+
 
     /**
      * This is a method that adds an object to the database
@@ -21,8 +24,6 @@ public interface DataStorageController<T> {
      */
     void removeElement(String objectId);
 
-
-    void editElement(T object, String key);
 
     /**
      * @param value

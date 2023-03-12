@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +35,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     /**
      * This function reads the results of the code scanning fragment
      * and displays a Toast with the content of the code then creates
-     * a new ScannableCode object with the SHA-256 hash of 'content'
+     * a new QRCode object with the SHA-256 hash of 'content'
      *
      * @param codeFormat
      *      this is the type of code that was scanned(String)
@@ -54,8 +52,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                     .hashString(content, StandardCharsets.UTF_8)
                     .toString();
 
-            // create new ScannableCode object from the contents of the scanned code
-            ScannableCode code = new ScannableCode(hashValue);
+            // create new QRCode object from the contents of the scanned code
+            QRCode code = new QRCode(hashValue);
 
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
