@@ -109,12 +109,12 @@ public class HomePageActivity extends AppCompatActivity {
         QrMonsterGoDB dbCodes = new QrMonsterGoDB();
         CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
         ArrayList<Integer> data = new ArrayList<>();
-        codes.whereArrayContains("codePlayerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        codes.whereArrayContains("playerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Integer key =Integer.parseInt(document.get("codeScoreKey").toString()) ;
+                        Integer key =Integer.parseInt(document.get("score").toString()) ;
                         data.add(key);
                     }
                     if(data.size() == 0){
