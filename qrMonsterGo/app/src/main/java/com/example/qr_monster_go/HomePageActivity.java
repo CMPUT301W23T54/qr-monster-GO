@@ -7,8 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -21,19 +33,37 @@ public class HomePageActivity extends AppCompatActivity {
     ImageButton AccountButton;
     ImageButton Leaderboards;
     TextView username;
+    TextView high;
+    TextView low;
+    TextView totalScore;
+    TextView scannedCodes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        //All textviews
+        high = findViewById(R.id.high);
+        low = findViewById(R.id.low);
+        totalScore = findViewById(R.id.total_score);
+        scannedCodes = findViewById(R.id.scanned_codes);
+        username = findViewById(R.id.username);
 
+        //All buttons
         ScanCodeButton = findViewById(R.id.scan_code_button);
         SearchButton = findViewById(R.id.search_users);
         MapButton = findViewById(R.id.map_location);
         AccountButton = findViewById(R.id.account_details);
         Leaderboards = findViewById(R.id.leaderboards);
-        username = findViewById(R.id.username);
+        //Gets player stats and displays
+        ArrayList<Integer> stats = new ArrayList<>();
+        stats = playerStats("Marcus");
+        high.setText("Highest Code " + stats.get(0));
+        low.setText("Lowest Code " + stats.get(1));
+        totalScore.setText("Total Score " + stats.get(2));
+        scannedCodes.setText("Scanned " + stats.get(3) + " codes");
         sharedPreferences = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         username.setText(sharedPreferences.getString(key, null));
+
         ScanCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,5 +101,41 @@ public class HomePageActivity extends AppCompatActivity {
                 //Leaderboards activity
             }
         });
+    }
+    public ArrayList<Integer> playerStats(String username){
+        //Code collection database instance
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
+        ArrayList<Integer> data = new ArrayList<>();
+        codes.whereArrayContains("codePlayerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Integer key =Integer.parseInt(document.get("codeScoreKey").toString()) ;
+                        data.add(key);
+                    }
+                }
+            }
+        });
+        if(data.size() == 0){
+            data.clear();
+            data.add(0);
+            data.add(0);
+            data.add(0);
+            data.add(0);
+            return data;
+        }
+        Collections.sort(data);
+        int high = data.get(data.size() - 1);
+        int low = data.get(0);
+        int score = 0;
+        int sum = data.size();
+        data.clear();
+        data.add(high);
+        data.add(low);
+        data.add(score);
+        data.add(sum);
+        return data;
     }
 }
