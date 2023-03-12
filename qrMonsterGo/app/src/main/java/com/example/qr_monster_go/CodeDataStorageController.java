@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CodeDataStorageController implements DataStorageController<ScannableCode>{
+public class CodeDataStorageController implements DataStorageController<QRCode>{
 
     private QrMonsterGoDB db;
 
@@ -56,7 +56,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
      *
      */
     @Override
-    public void addElement( ScannableCode code) {
+    public void addElement( QRCode code) {
         CollectionReference codeCollectionReference = db.getCollectionReference("CodeCollection");
 
         Map<String, Object> curCodeMap = new HashMap<>();
@@ -138,18 +138,18 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
 
     @Override
-    public void editElement( ScannableCode code, String key) {
+    public void editElement(QRCode code, String key) {
     }//editElement
 
 
     @Override
-    public ScannableCode getElementOfId(String codeId) {
-        ScannableCode[] code = new ScannableCode[1];
+    public QRCode getElementOfId(String codeId) {
+        QRCode[] code = new QRCode[1];
         DocumentReference codeRef = db.getDocumentReference(codeId,"CodeCollection");
         codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                code[0] = documentSnapshot.toObject(ScannableCode.class);
+                code[0] = documentSnapshot.toObject(QRCode.class);
             }
         });
         return code[0];
@@ -157,7 +157,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
 
 
     @Override
-    public ScannableCode getElementOfKey(String key, String value) {
+    public QRCode getElementOfKey(String key, String value) {
 
         return null;
 
@@ -169,7 +169,7 @@ public class CodeDataStorageController implements DataStorageController<Scannabl
     }//getPlayerWhoHasCode
 
     @Override
-    public ArrayList<ScannableCode> getSearchResultList( String searchKeywords) {
+    public ArrayList<QRCode> getSearchResultList(String searchKeywords) {
         return null;
     }
 

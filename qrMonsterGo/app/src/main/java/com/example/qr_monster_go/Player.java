@@ -27,7 +27,6 @@ public class Player {
     private String phone;
     private Integer totalScore;
     private Integer totalScannedCodes;
-    private Integer rank;
     private List<QRCode> codeList;
 
     final String TAG = "tag";
