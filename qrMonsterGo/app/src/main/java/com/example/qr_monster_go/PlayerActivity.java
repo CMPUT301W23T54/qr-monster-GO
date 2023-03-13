@@ -24,7 +24,7 @@ import com.google.firebase.firestore.model.Document;
 import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
-
+//Player activity, allows user to look at their qr codes they have scanned and view/delete them
 public class PlayerActivity extends AppCompatActivity {
     TextView username;
     ImageButton returnButton;

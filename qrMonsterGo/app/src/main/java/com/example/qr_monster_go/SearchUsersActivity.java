@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
+//Allows users to search for others in thee application and view other players profiles
 public class SearchUsersActivity extends AppCompatActivity {
     ImageButton returnButton;
     ImageButton searchButton;

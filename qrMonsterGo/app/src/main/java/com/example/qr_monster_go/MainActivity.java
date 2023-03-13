@@ -26,7 +26,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Locale;
-
+// First time sign up activity. If user has not used application before, they will be prompted to
+// sign up and if hey have signed up before, pushes to home page
 public class MainActivity extends AppCompatActivity {
     EditText username;
     Button signUp;
