@@ -38,9 +38,9 @@ public class ScanFragment extends Fragment {
     }
 
     /**
-     * When the scan is completed this function checks if a code was actually
-     * scanned then calls scanResultData from the parent activity to pass
-     * the data back to the parent activity
+     * When the scan is completed, this function checks if a code was actually
+     * scanned then calls setQRString from the parent activity to pass
+     * the data back to the parent activity and then initializes ConfirmLocationDialog
      *
      * @param requestCode The integer request code originally supplied to
      *                    startActivityForResult(), allowing you to identify who this
@@ -72,7 +72,7 @@ public class ScanFragment extends Fragment {
         }
         else {
             // call scanResultData from parent activity with null results
-            //
+            // FIXME when refactoring
             assert parent != null;
 //            parent.scanResultData();
         }

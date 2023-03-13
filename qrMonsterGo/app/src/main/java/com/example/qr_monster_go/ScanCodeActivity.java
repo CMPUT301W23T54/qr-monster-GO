@@ -57,29 +57,21 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     boolean addLocation = false;
     private LocationRequest locationRequest;
     private String Glocation; // global location
-    private QRCode code;
     boolean addImage = false;
     String GcodeFormat; // global code format
     String Gcontent; // global content
 
     /**
-     * This function reads the results of the code scanning fragment
-     * and displays a Toast with the content of the code then creates
+     * This function displays a Toast with the content of the code then creates
      * a new QRCode object with the SHA-256 hash of 'content'
      *
      * Called by setCurrentLocation to ensure that geolocation value is obtained
      * before sending data to database
      *
-//     * @param codeFormat
-//     *      this is the type of code that was scanned(String)
-//     * @param content
-//     *      this is the contents contained in the code that was scanned(String)
-//     */
+     */
     @Override
     public void scanResultData() {
-        Log.d("scanResultData", "About to scan data");
         if (Gcontent != null) {
-            Log.d("scanResultData", "content is not null");
             Toast.makeText(this, Gcontent, Toast.LENGTH_LONG).show();
 
             // generate SHA-256 hash of code
@@ -88,7 +80,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                     .toString();
 
             // create new QRCode object from the contents of the scanned code
-            code = new QRCode(hashValue);
+            QRCode code = new QRCode(hashValue);
 
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
@@ -101,7 +93,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 code.addPlayer(getIntent().getExtras().getString("username"));
                 code.geolocation = Glocation;
                 dc.addElement(code);
-                Log.d("scanResultData", "Called the Add Element Function");
             }
         }
         else {
@@ -133,16 +124,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             @Override
             public void onClick(View view) {
                 scanCode(); // Assumes new code is scanned each time
-
-                // Create location dialog fragment
-//                DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
-//                confirmlocationdialog.show(getSupportFragmentManager(), "location");
-                // Bug: if GPS is not enabled, user has to re-scan code
-
-                // Create QR object and add to database
-                Log.d("scanResultData", "After Dialog, before scan func");
-//                scanResultData(GcodeFormat, Gcontent, Glocation);
-
             }
         });
 
@@ -167,7 +148,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     }
 
     /**
-     *
+     * This function is used by ScanFragment to update the QR information after scanning
+     * the QR code. These updated variables are used in scanResultData()
      */
     public void setQRStrings(String codeFormat, String content) {
         GcodeFormat = codeFormat;
@@ -184,7 +166,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
      * This function generates the geolocation of the user and updates geolocation variable
      * It checks to see if GPS is enabled and also requests for location permissions if necessary
      *
-     * @return A string formatted as "latitudeXXlongitude"
+     * Calls upon scanResultData() once geolocation has been determined
+     *
      */
     @Override
     public void setCurrentLocation() {
@@ -217,9 +200,9 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 double longitude = locationResult.getLocations().get(index).getLongitude();
 
 
-                                Glocation = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
+                                Glocation = String.valueOf(latitude) +"X"+String.valueOf(longitude);
                                 scanResultData();
-                                Log.d("scanResultData", Glocation);
+                                Log.d("location", Glocation);
                                 Toast toast = Toast.makeText(getApplicationContext(), Glocation, Toast.LENGTH_LONG);
                                 toast.show();
                             }

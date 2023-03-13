@@ -9,6 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This dialog appears when user finishes scanning a code.
+ * It prompts the user to record location or not
+ * If yes to recording location, dialog calls upon setCurrentLocation() in ScanCodeActivity
+ * If no to recording location, dialog calls scanResultData(), skipping the location
+ */
 public class ConfirmLocationDialog extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
