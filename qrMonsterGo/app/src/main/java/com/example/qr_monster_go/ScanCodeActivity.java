@@ -4,6 +4,7 @@ package com.example.qr_monster_go;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,11 +26,15 @@ import java.nio.charset.StandardCharsets;
  *
  * implements ScanResultReceiver to easily retrieve
  * data from the scanning fragment
+ *
+ * Triggers the getLocation dialog and function (will be refactored into own class soon)
  */
 public class ScanCodeActivity extends AppCompatActivity implements ScanResultReceiver {
     Button scanButton;
     ImageButton returnButton;
+
     boolean addLocation = false;
+    private LocationRequest locationRequest;
     boolean addImage = false;
 
     /**
@@ -101,6 +106,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             }
         });
     }
+
 
     private void scanCode() {
         // create new ScanFragment to scan a code
