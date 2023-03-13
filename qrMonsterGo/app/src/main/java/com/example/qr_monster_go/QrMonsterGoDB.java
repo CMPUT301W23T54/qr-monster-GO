@@ -39,7 +39,7 @@ public class QrMonsterGoDB {
      */
     public CollectionReference getCollectionReference(String collectionName){
 
-        if (collectionName != "PlayerCollection" || collectionName != "CodeCollection"){
+        if (collectionName != "PlayerCollection" && collectionName != "CodeCollection"){
             Log.d(TAG, "collectionName is invalid. Please enter only 'PlayerCollection' or 'CodeCollection' " );
         }
 
