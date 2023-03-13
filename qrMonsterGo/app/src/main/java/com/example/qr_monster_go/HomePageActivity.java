@@ -51,7 +51,7 @@ public class HomePageActivity extends AppCompatActivity {
         MapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Map activity
+                startActivity(new Intent(HomePageActivity.this, MapDisplayActivity.class));
             }
         });
 
