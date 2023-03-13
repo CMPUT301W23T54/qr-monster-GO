@@ -22,7 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+//Home page of the application. Allows user to navigate through different
+// functionalities and activities of the application through buttons and shows the user various player stats
 public class HomePageActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
@@ -93,14 +94,16 @@ public class HomePageActivity extends AppCompatActivity {
         AccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Account details activity
+                Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+                intent.putExtra("username", sharedPreferences.getString(key, null));
+                startActivity(intent);
             }
         });
 
         Leaderboards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Leaderboards activity
+                startActivity(new Intent(HomePageActivity.this, LeaderboardsActivity.class));
             }
         });
     }
