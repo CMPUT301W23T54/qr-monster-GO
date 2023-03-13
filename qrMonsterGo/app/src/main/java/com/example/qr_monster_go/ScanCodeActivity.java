@@ -119,11 +119,12 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                scanCode();
+                scanCode(); // Assumes new code is scanned each time
 
                 // Create location dialog fragment
-                DialogFragment locationdialog = new LocationDialog();
-                locationdialog.show(getSupportFragmentManager(), "location");
+                DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
+                confirmlocationdialog.show(getSupportFragmentManager(), "location");
+                // Bug: if GPS is not enabled, user has to re-scan code
 
             }
         });
@@ -159,7 +160,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
      * This function generates the geolocation of the user.
      * It checks to see if GPS is enabled and also requests for location permissions if necessary
      */
-    public void getCurrentLocation() {
+    public void setCurrentLocation() {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
