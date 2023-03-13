@@ -135,8 +135,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 scanCode(); // Assumes new code is scanned each time
 
                 // Create location dialog fragment
-                DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
-                confirmlocationdialog.show(getSupportFragmentManager(), "location");
+//                DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
+//                confirmlocationdialog.show(getSupportFragmentManager(), "location");
                 // Bug: if GPS is not enabled, user has to re-scan code
 
                 // Create QR object and add to database

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -66,10 +67,12 @@ public class ScanFragment extends Fragment {
 //            parent.scanResultData(format, content);
             parent.setQRStrings(format, content); // Modified to set QR strings instead
             Log.d("scanResultData", "Finished setting up strings");
+            DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
+            confirmlocationdialog.show(((ScanCodeActivity)getActivity()).getSupportFragmentManager(), "location");
         }
         else {
             // call scanResultData from parent activity with null results
-            // FIXME
+            //
             assert parent != null;
 //            parent.scanResultData();
         }

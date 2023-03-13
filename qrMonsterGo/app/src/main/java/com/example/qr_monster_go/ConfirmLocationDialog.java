@@ -22,10 +22,12 @@ public class ConfirmLocationDialog extends DialogFragment {
                 .setTitle("Would you like to add your geo-location to this code?")
                 .setNegativeButton("No", (dialog, which) -> {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
+                    assert parent != null;
                     parent.scanResultData();
                 })
                 .setPositiveButton("Yes", (dialog, which) -> {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
+                    assert parent != null;
                     parent.setCurrentLocation();
                 })
                 .create();
