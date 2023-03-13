@@ -22,7 +22,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
+import java.util.Locale;
+//Allows users to search for others in thee application and view other players profiles
 public class SearchUsersActivity extends AppCompatActivity {
     ImageButton returnButton;
     ImageButton searchButton;
@@ -62,6 +63,7 @@ public class SearchUsersActivity extends AppCompatActivity {
                 QrMonsterGoDB db = new QrMonsterGoDB();
                 String user = searchedUser.getText().toString();
                 String TAG = "DocSnippets";
+                // TODO: 3/13/2023 Need to add it so we can substring search and lowercase checks 
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
