@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 // Access a Cloud Firestore instance
                 db = FirebaseFirestore.getInstance();
                 // Get a top level reference to the collection
-                final CollectionReference usersRef = db.collection("users");
+                final CollectionReference usersRef = db.collection("PlayerCollection");
                 // query Firebase if the entry exists
-                Query queryUsersByName = usersRef.whereEqualTo("name".toLowerCase(), userNameEntry.toLowerCase());
+                Query queryUsersByName = usersRef.whereEqualTo(key.toLowerCase(), userNameEntry.toLowerCase());
 
                 // add listener
                 queryUsersByName
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                         HashMap<String, String> data = new HashMap<>();
 
                                         // create a new key-value pair
-                                        data.put("name", userNameEntry);
+                                        data.put(key, userNameEntry);
 
                                         // get a new document's Id first
                                         String id = usersRef.document().getId();
