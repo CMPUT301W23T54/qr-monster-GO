@@ -5,6 +5,7 @@ package com.example.qr_monster_go;
  * easily access the results of a ScanFragment instance
  */
 public interface ScanResultReceiver {
-    public void scanResultData(String codeFormat, String content);
-    //public void setLocationChoice();
+    public void scanResultData();
+    public void setCurrentLocation();
+    public void setQRStrings(String codeFormat, String content);
 }
