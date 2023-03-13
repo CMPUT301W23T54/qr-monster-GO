@@ -102,7 +102,7 @@ public class HomePageActivity extends AppCompatActivity {
         Leaderboards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Leaderboards activity
+                startActivity(new Intent(HomePageActivity.this, LeaderboardsActivity.class));
             }
         });
     }
