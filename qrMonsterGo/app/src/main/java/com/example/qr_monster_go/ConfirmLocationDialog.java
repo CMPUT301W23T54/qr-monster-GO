@@ -8,7 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
+//Dialog fragment that allows user to pick if they
+// would like to add the geolocation to the code they have scanned
 public class ConfirmLocationDialog extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
