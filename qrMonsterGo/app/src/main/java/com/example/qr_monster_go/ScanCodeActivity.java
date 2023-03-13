@@ -1,21 +1,42 @@
 package com.example.qr_monster_go;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.location.LocationRequest;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+//import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.SharedPreferencesKt;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
@@ -24,7 +45,7 @@ import java.nio.charset.StandardCharsets;
  * This activity is where the user can scan a code
  * and add it to their account
  *
- * implements ScanResultReceiver to easily retrieve
+ * Implements ScanResultReceiver to easily retrieve
  * data from the scanning fragment
  *
  * Triggers the getLocation dialog and function (will be refactored into own class soon)
@@ -89,11 +110,21 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_code);
 
+        locationRequest = com.google.android.gms.location.LocationRequest.create();
+        locationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
+
         scanButton = findViewById(R.id.scan_code_button);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scanCode();
+//                scanCode();
+
+                // Create location dialog fragment
+                DialogFragment locationdialog = new LocationDialog();
+                locationdialog.show(getSupportFragmentManager(), "location");
+
             }
         });
 
@@ -116,4 +147,120 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         fragmentTransaction.add(R.id.scanFragment,scanFragment);
         fragmentTransaction.commit();
     }
+
+
+    /*********************************************************************/
+    // Location Methods (will be refactored later)
+    // Credit for precise location method @TechnicalCoding
+    // https://www.youtube.com/watch?v=mbQd6frpC3g
+    /*********************************************************************/
+
+    /**
+     * This function generates the geolocation of the user.
+     * It checks to see if GPS is enabled and also requests for location permissions if necessary
+     */
+    public void getCurrentLocation() {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(ScanCodeActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                if (isGPSEnabled()) {
+
+                    LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
+                            .requestLocationUpdates(locationRequest, new LocationCallback() {
+                                @Override
+                                public void onLocationResult(@NonNull LocationResult locationResult) {
+                                    super.onLocationResult(locationResult);
+
+                                    LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
+                                            .removeLocationUpdates(this);
+
+                                    if (locationResult != null && locationResult.getLocations().size() >0){
+
+                                        int index = locationResult.getLocations().size() - 1;
+                                        double latitude = locationResult.getLocations().get(index).getLatitude();
+                                        double longitude = locationResult.getLocations().get(index).getLongitude();
+
+
+                                        String answer = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
+                                        Log.d("locationtag", answer);
+                                        Toast toast = Toast.makeText(getApplicationContext(), answer, Toast.LENGTH_LONG);
+                                        toast.show();
+
+                                    }
+                                }
+                            }, Looper.getMainLooper());
+
+                } else {
+                    turnOnGPS();
+                }
+
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+    }
+
+    /**
+     * Function turns on GPS
+     */
+    private void turnOnGPS() {
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(ScanCodeActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+
+                } catch (ApiException e) {
+
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            try {
+                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                                resolvableApiException.startResolutionForResult(ScanCodeActivity.this, 2);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Device does not have location
+                            break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    /**
+     * Function checks to see if GPS is enabled
+     *
+     * @return A boolean representing whether or not the GPS is enabled
+     */
+    private boolean isGPSEnabled() {
+        LocationManager locationManager = null;
+        boolean isEnabled = false;
+
+        if (locationManager == null) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+
+        isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isEnabled;
+
+    }
+
 }
