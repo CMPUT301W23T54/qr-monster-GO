@@ -56,28 +56,35 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
     boolean addLocation = false;
     private LocationRequest locationRequest;
-    private String location;
+    private String Glocation; // global location
     private QRCode code;
     boolean addImage = false;
+    String GcodeFormat; // global code format
+    String Gcontent; // global content
 
     /**
      * This function reads the results of the code scanning fragment
      * and displays a Toast with the content of the code then creates
      * a new QRCode object with the SHA-256 hash of 'content'
      *
-     * @param codeFormat
-     *      this is the type of code that was scanned(String)
-     * @param content
-     *      this is the contents contained in the code that was scanned(String)
-     */
+     * Called by setCurrentLocation to ensure that geolocation value is obtained
+     * before sending data to database
+     *
+//     * @param codeFormat
+//     *      this is the type of code that was scanned(String)
+//     * @param content
+//     *      this is the contents contained in the code that was scanned(String)
+//     */
     @Override
-    public void scanResultData(String codeFormat, String content) {
-        if (content != null) {
-            Toast.makeText(this, content, Toast.LENGTH_LONG).show();
+    public void scanResultData() {
+        Log.d("scanResultData", "About to scan data");
+        if (Gcontent != null) {
+            Log.d("scanResultData", "content is not null");
+            Toast.makeText(this, Gcontent, Toast.LENGTH_LONG).show();
 
             // generate SHA-256 hash of code
             String hashValue = Hashing.sha256()
-                    .hashString(content, StandardCharsets.UTF_8)
+                    .hashString(Gcontent, StandardCharsets.UTF_8)
                     .toString();
 
             // create new QRCode object from the contents of the scanned code
@@ -90,9 +97,11 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 // 2. if not: add player to codes player list here
             }
             else {
-                // add username to codes player list then add code to the database
+                // add username and location to codes player list then add code to the database
                 code.addPlayer(getIntent().getExtras().getString("username"));
+                code.geolocation = Glocation;
                 dc.addElement(code);
+                Log.d("scanResultData", "Called the Add Element Function");
             }
         }
         else {
@@ -105,6 +114,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 //    public void setLocationChoice() {
 //        this.addLocation = true;
 //    }
+
+
 
 
     @Override
@@ -127,6 +138,10 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
                 confirmlocationdialog.show(getSupportFragmentManager(), "location");
                 // Bug: if GPS is not enabled, user has to re-scan code
+
+                // Create QR object and add to database
+                Log.d("scanResultData", "After Dialog, before scan func");
+//                scanResultData(GcodeFormat, Gcontent, Glocation);
 
             }
         });
@@ -151,30 +166,28 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         fragmentTransaction.commit();
     }
 
-
+    /**
+     *
+     */
+    public void setQRStrings(String codeFormat, String content) {
+        GcodeFormat = codeFormat;
+        Gcontent = content;
+    }
     /*********************************************************************/
     // Location Methods (will be refactored later)
     // Credit for precise location method @TechnicalCoding
     // https://www.youtube.com/watch?v=mbQd6frpC3g
     /*********************************************************************/
 
-    /**
-     * This function adds the geolocation to the database
-     */
-    public void setCurrentLocation() {
-        String gpslocation = getLocation();
 
-        code.geolocation = gpslocation;
-
-        // Add
-    }
     /**
-     * This function generates the geolocation of the user.
+     * This function generates the geolocation of the user and updates geolocation variable
      * It checks to see if GPS is enabled and also requests for location permissions if necessary
      *
      * @return A string formatted as "latitudeXXlongitude"
      */
-    private String getLocation() {
+    @Override
+    public void setCurrentLocation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Request location permissions
@@ -204,15 +217,15 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 double longitude = locationResult.getLocations().get(index).getLongitude();
 
 
-                                location = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
-                                Log.d("locationtag", location);
-                                Toast toast = Toast.makeText(getApplicationContext(), location, Toast.LENGTH_LONG);
+                                Glocation = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
+                                scanResultData();
+                                Log.d("scanResultData", Glocation);
+                                Toast toast = Toast.makeText(getApplicationContext(), Glocation, Toast.LENGTH_LONG);
                                 toast.show();
                             }
                         }
                     }, Looper.getMainLooper());
         }
-        return location;
     }
 
     /**

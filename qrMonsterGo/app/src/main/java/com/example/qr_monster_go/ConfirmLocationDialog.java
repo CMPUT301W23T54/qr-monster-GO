@@ -20,11 +20,21 @@ public class ConfirmLocationDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         return new AlertDialog.Builder(requireContext())
                 .setTitle("Would you like to add your geo-location to this code?")
-                .setNegativeButton("No", null)
+                .setNegativeButton("No", (dialog, which) -> {
+                    ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
+                    parent.scanResultData();
+                })
                 .setPositiveButton("Yes", (dialog, which) -> {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
                     parent.setCurrentLocation();
                 })
                 .create();
     }
+
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
+//        parent.scanResultData();
+//    }
 }
