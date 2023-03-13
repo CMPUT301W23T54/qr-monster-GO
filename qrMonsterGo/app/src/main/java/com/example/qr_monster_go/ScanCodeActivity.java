@@ -56,6 +56,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
     boolean addLocation = false;
     private LocationRequest locationRequest;
+    private String location;
+    private QRCode code;
     boolean addImage = false;
 
     /**
@@ -79,7 +81,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                     .toString();
 
             // create new QRCode object from the contents of the scanned code
-            QRCode code = new QRCode(hashValue);
+            code = new QRCode(hashValue);
 
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
@@ -157,50 +159,60 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     /*********************************************************************/
 
     /**
-     * This function generates the geolocation of the user.
-     * It checks to see if GPS is enabled and also requests for location permissions if necessary
+     * This function adds the geolocation to the database
      */
     public void setCurrentLocation() {
+        String gpslocation = getLocation();
 
+        code.geolocation = gpslocation;
+
+        // Add
+    }
+    /**
+     * This function generates the geolocation of the user.
+     * It checks to see if GPS is enabled and also requests for location permissions if necessary
+     *
+     * @return A string formatted as "latitudeXXlongitude"
+     */
+    private String getLocation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(ScanCodeActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                if (isGPSEnabled()) {
-
-                    LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
-                            .requestLocationUpdates(locationRequest, new LocationCallback() {
-                                @Override
-                                public void onLocationResult(@NonNull LocationResult locationResult) {
-                                    super.onLocationResult(locationResult);
-
-                                    LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
-                                            .removeLocationUpdates(this);
-
-                                    if (locationResult != null && locationResult.getLocations().size() >0){
-
-                                        int index = locationResult.getLocations().size() - 1;
-                                        double latitude = locationResult.getLocations().get(index).getLatitude();
-                                        double longitude = locationResult.getLocations().get(index).getLongitude();
-
-
-                                        String answer = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
-                                        Log.d("locationtag", answer);
-                                        Toast toast = Toast.makeText(getApplicationContext(), answer, Toast.LENGTH_LONG);
-                                        toast.show();
-
-                                    }
-                                }
-                            }, Looper.getMainLooper());
-
-                } else {
-                    turnOnGPS();
-                }
-
-            } else {
+            // Request location permissions
+            if (ActivityCompat.checkSelfPermission(ScanCodeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
+
+            // Turn on GPS if not already enabled
+            if (!isGPSEnabled()) {
+                turnOnGPS();
+            }
+
+
+            LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
+                    .requestLocationUpdates(locationRequest, new LocationCallback() {
+                        @Override
+                        public void onLocationResult(@NonNull LocationResult locationResult) {
+                            super.onLocationResult(locationResult);
+
+                            LocationServices.getFusedLocationProviderClient(ScanCodeActivity.this)
+                                    .removeLocationUpdates(this);
+
+                            if (locationResult != null && locationResult.getLocations().size() >0){
+
+                                int index = locationResult.getLocations().size() - 1;
+                                double latitude = locationResult.getLocations().get(index).getLatitude();
+                                double longitude = locationResult.getLocations().get(index).getLongitude();
+
+
+                                location = String.valueOf(latitude) +"XX"+String.valueOf(longitude);
+                                Log.d("locationtag", location);
+                                Toast toast = Toast.makeText(getApplicationContext(), location, Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }
+                    }, Looper.getMainLooper());
         }
+        return location;
     }
 
     /**
