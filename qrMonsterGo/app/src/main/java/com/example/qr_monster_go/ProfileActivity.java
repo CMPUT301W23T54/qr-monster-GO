@@ -19,7 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+//Allows user to view others profiles and codes they have scanned
 public class ProfileActivity extends AppCompatActivity {
     TextView name;
     ImageButton backButton;

@@ -22,7 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+//Home page of the application. Allows user to navigate through different
+// functionalities and activities of the application through buttons and shows the user various player stats
 public class HomePageActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;

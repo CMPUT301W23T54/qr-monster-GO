@@ -12,8 +12,15 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This class provides a custom adapter to use to display a list of codes
+ */
 public class codeListArrayAdapter extends ArrayAdapter<QRCode> {
-
+    /**
+     * Constructor for the code list adapter to make
+     * @param context
+     * @param codes
+     */
     public codeListArrayAdapter(Context context, ArrayList<QRCode> codes) {
         super(context, 0, codes);
     }

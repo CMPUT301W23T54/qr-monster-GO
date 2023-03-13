@@ -16,7 +16,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-// progress so far
+/**
+ * Player class, allows ot create a player object and gets various information about the player
+ */
 public class Player {
     private String username;
     private String email;
@@ -42,42 +44,82 @@ public class Player {
         this.username = username;
     }
 
+    /**
+     * Getter method to get players username
+     * @return
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Setter method to set players username
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Getter method to get players email
+     * @return
+     */
     public String getEmail() {
         return this.email;
     }
 
+    /**
+     * Setter method to set players email
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Getter method to get players phone
+     * @return
+     */
     public String getPhone() {
         return this.phone;
     }
 
+    /**
+     * Setter method to set players phone
+     * @param phone
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Getter method to get players score
+     * @return
+     */
     public Integer getTotalScore() {
         return this.totalScore;
     }
 
+    /**
+     * Setter method to set players score
+     * @param totalScore
+     */
     public void setTotalScore(Integer totalScore) {
         this.totalScore = totalScore;
     }
 
+    /**
+     * Getter method to get players scanned codes
+     * @return
+     */
     public Integer getTotalScannedCodes() {
         return this.totalScannedCodes;
     }
 
+    /**
+     * Setter method to set players scanned codes
+     * @param totalScannedCodes
+     */
     public void setTotalScannedCodes(Integer totalScannedCodes) {
         this.totalScannedCodes = totalScannedCodes;
     }
