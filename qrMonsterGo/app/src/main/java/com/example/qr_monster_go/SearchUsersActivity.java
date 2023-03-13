@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SearchUsersActivity extends AppCompatActivity {
     ImageButton returnButton;
@@ -60,13 +61,13 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 QrMonsterGoDB db = new QrMonsterGoDB();
-                String user = searchedUser.getText().toString();
+                String user = searchedUser.getText().toString().toLowerCase();
                 String TAG = "DocSnippets";
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
                     CollectionReference usersReference = db.getCollectionReference("users");
-                    usersReference.whereEqualTo("name", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    usersReference.whereEqualTo("name".toLowerCase(), user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
