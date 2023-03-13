@@ -93,7 +93,9 @@ public class HomePageActivity extends AppCompatActivity {
         AccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Account details activity
+                Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+                intent.putExtra("username", sharedPreferences.getString(key, null));
+                startActivity(intent);
             }
         });
 
