@@ -61,13 +61,14 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 QrMonsterGoDB db = new QrMonsterGoDB();
-                String user = searchedUser.getText().toString().toLowerCase();
+                String user = searchedUser.getText().toString();
                 String TAG = "DocSnippets";
+                // TODO: 3/13/2023 Need to add it so we can substring search and lowercase checks 
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
                     CollectionReference usersReference = db.getCollectionReference("users");
-                    usersReference.whereEqualTo("name".toLowerCase(), user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    usersReference.whereEqualTo("name", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
