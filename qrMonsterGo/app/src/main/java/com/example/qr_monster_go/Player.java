@@ -28,12 +28,6 @@ public class Player {
     FirebaseFirestore db;
 
     /**
-     * empty constructor
-     */
-    public Player() {
-    }
-
-    /**
      * constructor with a player's username
      *
      * @param username
