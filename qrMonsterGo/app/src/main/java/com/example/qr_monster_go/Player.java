@@ -91,21 +91,7 @@ public class Player {
      * @return
      */
     public Integer getTotalScore() {
-        final Integer[] scores = {0};
-        QrMonsterGoDB userScores = new QrMonsterGoDB();
-        CollectionReference codesReference = userScores.getCollectionReference("CodeCollection");
-        codesReference.whereArrayContains("playerList", this.username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                        scores[0] += Integer.parseInt(document.get("score").toString());
-                    }
-                }
-            }
-        });
-        return scores[0];
+        return this.totalScore;
     }
 
     /**

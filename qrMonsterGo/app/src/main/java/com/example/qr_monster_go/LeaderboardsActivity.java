@@ -35,8 +35,29 @@ public class LeaderboardsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String name = document.get("username").toString();
-                        playersinfo.add(new Player(name));
+                        Player player = new Player(document.get("username").toString());
+                        CollectionReference codesReference = db.getCollectionReference("CodeCollection");
+                        codesReference.whereArrayContains("playerList", document.get("username")
+                                .toString())
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    Integer sum = 0;
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                        sum += Integer.parseInt(document.get("score").toString());
+                                    }
+                                    player.setTotalScore(sum);
+                                    playerArrayAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        if(player.getTotalScore() == null){
+                            player.setTotalScore(0);
+                        }
+                        playersinfo.add(player);
                     }
                     players.setAdapter(playerArrayAdapter);
                 }
