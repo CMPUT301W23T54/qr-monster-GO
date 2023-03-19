@@ -91,19 +91,17 @@ public class Player {
      * @return
      */
     public Integer getTotalScore() {
-        final int[] scores = {0};
+        final Integer[] scores = {0};
         QrMonsterGoDB userScores = new QrMonsterGoDB();
         CollectionReference codesReference = userScores.getCollectionReference("CodeCollection");
         codesReference.whereArrayContains("playerList", this.username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    int sum = 0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-                        sum += Integer.parseInt(document.get("score").toString());
+                        scores[0] += Integer.parseInt(document.get("score").toString());
                     }
-                    scores[0] = sum;
                 }
             }
         });
@@ -150,12 +148,12 @@ public class Player {
     }
 
     /**
-     * populate Player class properties from Firebase Players collection queried by username
+     * populate Player class properties from Firebase PlayersAdapter collection queried by username
     public void populateFromFirebase() {
         // Access a Cloud Firestore instance
         db = FirebaseFirestore.getInstance();
         // Get a top level reference to the collection
-        final CollectionReference usersRef = db.collection("Players");
+        final CollectionReference usersRef = db.collection("PlayersAdapter");
         // query Firebase by username
         Query queryByUserName = usersRef.whereEqualTo("username", this.username);
 

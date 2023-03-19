@@ -12,10 +12,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 
-public class Players extends ArrayAdapter<Player> {
+public class PlayersAdapter extends ArrayAdapter<Player> {
     private ArrayList<Player> users;
     private Context context;
-    public Players(Context context, ArrayList<Player> users){
+    public PlayersAdapter(Context context, ArrayList<Player> users){
         super(context, 0, users);
         this.users = users;
         this.context = context;

@@ -14,7 +14,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 //Leaderboards activity that shows user top scores in the application
 public class LeaderboardsActivity extends AppCompatActivity {
@@ -28,7 +27,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboards);
         players = findViewById(R.id.players);
         playersinfo = new ArrayList<>();
-        playerArrayAdapter = new Players(this, playersinfo);
+        playerArrayAdapter = new PlayersAdapter(this, playersinfo);
         players.setAdapter(playerArrayAdapter);
         CollectionReference users = db.getCollectionReference("PlayerCollection");
         users.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
