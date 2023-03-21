@@ -14,6 +14,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 //Leaderboards activity that shows user top scores in the application
 public class LeaderboardsActivity extends AppCompatActivity {
@@ -46,10 +48,15 @@ public class LeaderboardsActivity extends AppCompatActivity {
                                 if(task.isSuccessful()){
                                     Integer sum = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-
                                         sum += Integer.parseInt(document.get("score").toString());
                                     }
                                     player.setTotalScore(sum);
+                                    Collections.sort(playersinfo, new Comparator<Player>() {
+                                        @Override
+                                        public int compare(Player player, Player player1) {
+                                            return player1.getTotalScore() < player.getTotalScore() ? -1 : 1;
+                                        }
+                                    });
                                     playerArrayAdapter.notifyDataSetChanged();
                                 }
                             }
