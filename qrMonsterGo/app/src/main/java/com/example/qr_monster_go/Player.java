@@ -134,12 +134,12 @@ public class Player {
     }
 
     /**
-     * populate Player class properties from Firebase Players collection queried by username
+     * populate Player class properties from Firebase PlayersAdapter collection queried by username
     public void populateFromFirebase() {
         // Access a Cloud Firestore instance
         db = FirebaseFirestore.getInstance();
         // Get a top level reference to the collection
-        final CollectionReference usersRef = db.collection("Players");
+        final CollectionReference usersRef = db.collection("PlayersAdapter");
         // query Firebase by username
         Query queryByUserName = usersRef.whereEqualTo("username", this.username);
 

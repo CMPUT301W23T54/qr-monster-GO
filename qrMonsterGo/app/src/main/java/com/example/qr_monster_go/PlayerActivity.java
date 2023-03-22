@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,14 +25,20 @@ import com.google.firebase.firestore.model.Document;
 import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 //Player activity, allows user to look at their qr codes they have scanned and view/delete them
 public class PlayerActivity extends AppCompatActivity {
     TextView username;
+    TextView playerRanking;
     ImageButton returnButton;
+    ImageButton scannedButton;
     ImageButton deleteButton;
     ListView qrCodes;
-    ArrayAdapter<String> codesAdapter;
-    ArrayList<String> data;
+    private codeListArrayAdapter codesAdapter;
+    ArrayList<QRCode> data;
+    ArrayList<QRCode> codes;
     private int location = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +49,58 @@ public class PlayerActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         returnButton = findViewById(R.id.home_return);
         deleteButton = findViewById(R.id.delete_button);
+        scannedButton = findViewById(R.id.players_scanned_button);
         qrCodes = findViewById(R.id.codes);
         username.setText(getName);
+        playerRanking = findViewById(R.id.ranking);
         QrMonsterGoDB db = new QrMonsterGoDB();
         data = new ArrayList<>();
-        codesAdapter = new ArrayAdapter<>(this, R.layout.display, data);
+        codes = new ArrayList<>();
+        codesAdapter = new codeListArrayAdapter(this, data);
         qrCodes.setAdapter(codesAdapter);
-        CollectionReference usersReference = db.getCollectionReference("users");
-        CollectionReference codesReference = db.getCollectionReference("CodeCollection");
-        codesReference.whereArrayContains("playerList", getName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        getCodes(getName, new dataCallback() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String name = document.get("name").toString();
-                        data.add(name);
+            public void onCallBack(ArrayList<QRCode> list) {
+                data.addAll(list);
+                Collections.sort(data, new Comparator<QRCode>() {
+                    @Override
+                    public int compare(QRCode code, QRCode code1) {
+                        return code1.score < code.score ? -1 : 1;
                     }
-                    qrCodes.setAdapter(codesAdapter);
+                });
+                codesAdapter.notifyDataSetChanged();
+                Log.d(String.valueOf(data), "onCallBack: callback");
+            }
+        });
+        getAllCodes(new dataCallback() {
+            @Override
+            public void onCallBack(ArrayList<QRCode> list) {
+                codes.addAll(list);
+                Log.d(String.valueOf(data), "onCallBack: callback");
+                Collections.sort(codes, new Comparator<QRCode>() {
+                    @Override
+                    public int compare(QRCode code, QRCode code1) {
+                        return code1.score < code.score ? -1 : 1;
+                    }
+                });
+                Integer ranking = 0;
+                if(data.size() != 0){
+                    for (Integer i = 0; i < codes.size(); i++){
+                        if( data.get(0).code.equals(codes.get(i).code)){
+                            ranking = i + 1;
+                        }
+                    }
+                }
+                if(ranking != 0){
+                    playerRanking.setText("Ranked approximately " + ranking + " for highest unique code in the world!");
+                }
+                else{
+                    playerRanking.setText("");
                 }
             }
         });
+        CollectionReference usersReference = db.getCollectionReference("PlayerCollection");
+        CollectionReference codesReference = db.getCollectionReference("CodeCollection");
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +114,7 @@ public class PlayerActivity extends AppCompatActivity {
                     Toast.makeText(PlayerActivity.this, "Code not selected to remove", Toast.LENGTH_LONG).show();
                 }
                 else{
-                codesReference.whereEqualTo("name", data.get(location)).get()
+                codesReference.whereEqualTo("code", data.get(location).code).get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -86,8 +125,23 @@ public class PlayerActivity extends AppCompatActivity {
                                 DocumentReference code = db.getDocumentReference(id, "CodeCollection");
                                 code.update("playerList", FieldValue.arrayRemove(getName));
                                 data.remove(location);
-                                location = -1;
+                                Integer ranking = 0;
+                                if(data.size() != 0){
+                                    for (Integer i = 0; i < codes.size(); i++){
+                                        if( data.get(0).code.equals(codes.get(i).code)){
+                                            ranking = i + 1;
+                                        }
+                                    }
+                                }
+                                if(ranking != 0){
+                                    playerRanking.setText("Ranked approximately " + ranking + " for highest unique code in the world!");
+                                }
+                                else{
+                                    playerRanking.setText("");
+                                }
+                                codesAdapter.notifyDataSetChanged();
                             }
+                            location = -1;
                             qrCodes.setAdapter(codesAdapter);
                         }
                     }
@@ -101,5 +155,69 @@ public class PlayerActivity extends AppCompatActivity {
                 location = index;
             }
         });
+        scannedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(location == -1){
+                    Toast.makeText(PlayerActivity.this, "Code not selected to remove", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Intent intent = new Intent(PlayerActivity.this, ScanCodeActivity.class);
+                    intent.putExtra("code", codes.get(location).code);
+
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+    private void getCodes(String username, dataCallback callback) {
+        //Code collection database instance
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
+
+        codes.whereArrayContains("playerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<QRCode> data = new ArrayList<>();
+                if(task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d((String) document.get("code"), "onComplete: codeFound");
+                        data.add(new QRCode((String) document.get("code")));
+                    }
+                    Log.d(String.valueOf(data), "onComplete: dataList");
+                }
+                else {
+                    Log.d("fail", "getCodes: fail");
+                }
+
+                callback.onCallBack(data);
+            }
+        });
+
+    }
+    private void getAllCodes(dataCallback callback) {
+        //Code collection database instance
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
+
+        codes.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<QRCode> data = new ArrayList<>();
+                if(task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d((String) document.get("code"), "onComplete: codeFound");
+                        data.add(new QRCode((String) document.get("code")));
+                    }
+                    Log.d(String.valueOf(data), "onComplete: dataList");
+                }
+                else {
+                    Log.d("fail", "getCodes: fail");
+                }
+
+                callback.onCallBack(data);
+            }
+        });
+
     }
 }
