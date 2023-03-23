@@ -162,7 +162,7 @@ public class PlayerActivity extends AppCompatActivity {
                     Toast.makeText(PlayerActivity.this, "Code not selected to remove", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Intent intent = new Intent(PlayerActivity.this, ScanCodeActivity.class);
+                    Intent intent = new Intent(PlayerActivity.this, ScannedPlayersActivity.class);
                     intent.putExtra("code", codes.get(location).code);
 
                     startActivity(intent);
