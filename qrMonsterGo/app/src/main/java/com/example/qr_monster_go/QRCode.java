@@ -21,7 +21,7 @@ public class QRCode {
         this.code = code;
         //calculate score in the constructor
         this.score = calculate_score(this.code);
-        this.name = generateName(this.code.substring(0, 2)); // only pass in first 2 characters(all that is needed for name generation)
+        this.name = generateName(this.code.substring(0, 7)); // only pass in a substring to avoid overflow when converting to binary
         this.playerList = new ArrayList<String>();
         this.geolocation = "";
 
