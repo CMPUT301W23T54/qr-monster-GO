@@ -126,5 +126,13 @@ public class MainActivity extends AppCompatActivity {
         });         // signUp.setOnClickListener
     }               // onCreate
 
+    // if user presses back arrow to get to login page redirect to home page
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        String existing = sharedPreferences.getString(key, null);
+        Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+        startActivity(intent);
+    }
 }
