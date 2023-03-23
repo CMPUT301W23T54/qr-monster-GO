@@ -92,6 +92,7 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
         curCodeMap.put("name", code.getName());
         curCodeMap.put("playerList", code.getPlayerList());
         curCodeMap.put("location", code.getGeolocation());
+        curCodeMap.put("comments", code.getCommentList());
 
         DocumentReference doc = codeCollectionReference.document(code.getCode());
 

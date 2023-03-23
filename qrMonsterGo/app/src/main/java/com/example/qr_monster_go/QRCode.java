@@ -16,6 +16,8 @@ public class QRCode {
     ArrayList<String> playerList;  //stores the players who have Scanned the code
     String geolocation;  //for now geolocation is represented as a string
 
+    ArrayList<String> commentList;
+
 
     public QRCode(String code) {
         this.code = code;
@@ -24,6 +26,7 @@ public class QRCode {
         this.name = generateName(this.code.substring(0, 7)); // only pass in a substring to avoid overflow when converting to binary
         this.playerList = new ArrayList<String>();
         this.geolocation = "";
+        this.commentList = new ArrayList<String>();
 
     }
 
@@ -152,5 +155,6 @@ public class QRCode {
 
     public String getGeolocation() { return geolocation; }
 
+    public ArrayList<String> getCommentList() {return commentList;}
 
 }
