@@ -121,7 +121,6 @@ public class PlayerActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.getId();
-                                ArrayList<String> update = new ArrayList<>();
                                 DocumentReference code = db.getDocumentReference(id, "CodeCollection");
                                 code.update("playerList", FieldValue.arrayRemove(getName));
                                 data.remove(location);
@@ -163,8 +162,8 @@ public class PlayerActivity extends AppCompatActivity {
                 }
                 else{
                     Intent intent = new Intent(PlayerActivity.this, ScannedPlayersActivity.class);
-                    intent.putExtra("code", codes.get(location).code);
-
+                    intent.putExtra("code", data.get(location).code);
+                    intent.putExtra("uname", getName);
                     startActivity(intent);
                 }
             }
