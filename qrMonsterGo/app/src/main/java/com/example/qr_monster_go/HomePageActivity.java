@@ -88,6 +88,9 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Map activity
+                Intent intent = new Intent(HomePageActivity.this, MapsActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
