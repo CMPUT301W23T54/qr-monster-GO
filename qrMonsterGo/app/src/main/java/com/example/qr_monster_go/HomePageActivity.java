@@ -90,7 +90,6 @@ public class HomePageActivity extends AppCompatActivity {
                 //Map activity
                 Intent intent = new Intent(HomePageActivity.this, MapsActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
