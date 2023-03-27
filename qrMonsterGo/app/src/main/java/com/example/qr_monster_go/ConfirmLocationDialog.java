@@ -30,11 +30,17 @@ public class ConfirmLocationDialog extends DialogFragment {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
                     assert parent != null;
                     parent.scanResultData();
+
+                    DialogFragment confirmImageDialog = new ConfirmImageDialog();
+                    confirmImageDialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "image");
                 })
                 .setPositiveButton("Yes", (dialog, which) -> {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
                     assert parent != null;
                     parent.setCurrentLocation();
+
+                    DialogFragment confirmImageDialog = new ConfirmImageDialog();
+                    confirmImageDialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "image");
                 })
                 .create();
     }
