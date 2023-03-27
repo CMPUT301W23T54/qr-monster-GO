@@ -68,7 +68,7 @@ public class SearchUsersActivity extends AppCompatActivity {
                     data.clear();
                     users.setAdapter(usersAdapter);
                     CollectionReference usersReference = db.getCollectionReference("PlayerCollection");
-                    usersReference.whereEqualTo("name", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    usersReference.whereEqualTo("PlayerCollection", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
