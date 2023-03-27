@@ -62,19 +62,15 @@ public class ScanFragment extends Fragment {
             String content = result.getContents();
             String format = result.getFormatName();
 
-            //call scanResultData from parent activity to set values for code scanning results
-            assert parent != null;
-//            parent.scanResultData(format, content);
-            parent.setQRStrings(format, content); // Modified to set QR strings instead
-            Log.d("scanResultData", "Finished setting up strings");
-            DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
-            confirmlocationdialog.show(((ScanCodeActivity)getActivity()).getSupportFragmentManager(), "location");
-        }
-        else {
-            // call scanResultData from parent activity with null results
-            // FIXME when refactoring
-            assert parent != null;
-//            parent.scanResultData();
+            if (content != null) {
+                //call scanResultData from parent activity to set values for code scanning results
+                assert parent != null;
+
+                parent.setQRStrings(format, content); // Modified to set QR strings instead
+                Log.d("scanResultData", "Finished setting up strings");
+                DialogFragment confirmlocationdialog = new ConfirmLocationDialog();
+                confirmlocationdialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "location");
+            }
         }
     }
 }
