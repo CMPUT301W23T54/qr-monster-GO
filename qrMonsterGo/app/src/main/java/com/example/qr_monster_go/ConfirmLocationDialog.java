@@ -29,7 +29,6 @@ public class ConfirmLocationDialog extends DialogFragment {
                 .setNegativeButton("No", (dialog, which) -> {
                     ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
                     assert parent != null;
-                    parent.scanResultData();
 
                     DialogFragment confirmImageDialog = new ConfirmImageDialog();
                     confirmImageDialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "image");
@@ -45,10 +44,4 @@ public class ConfirmLocationDialog extends DialogFragment {
                 .create();
     }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
-//        parent.scanResultData();
-//    }
 }

@@ -21,10 +21,15 @@ public class ConfirmImageDialog extends DialogFragment {
         return new AlertDialog.Builder(requireContext())
                 .setTitle("Would you like to add an image of the location to this code?")
                 .setNegativeButton("No", (dialog, which) -> {
-
+                    // process scan
+                    ScanResultReceiver parent = (ScanResultReceiver) this.getActivity();
+                    assert parent != null;
+                    parent.scanResultData();
                 })
                 .setPositiveButton("Yes", (dialog, which) -> {
-
+                    ScanCodeActivity parent = (ScanCodeActivity) this.getActivity();
+                    assert parent != null;
+                    parent.startImageActivity();
                 })
                 .create();
     }
