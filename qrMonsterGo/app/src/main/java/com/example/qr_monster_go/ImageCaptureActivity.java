@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -83,7 +84,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
         Bitmap scaledMap = Bitmap.createScaledBitmap(map, 480, 640, false);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        scaledMap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        scaledMap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
         return stream.toByteArray();
     }
