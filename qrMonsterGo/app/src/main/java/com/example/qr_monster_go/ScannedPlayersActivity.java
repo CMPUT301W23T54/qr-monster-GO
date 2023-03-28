@@ -81,10 +81,15 @@ public class ScannedPlayersActivity extends AppCompatActivity {
                         commentsData.addAll(review);
                         users.setAdapter(usersAdapter);
                         usersComments.setAdapter(commentsAdapter);
-                        String base64String = document.getString("imageMap");
-                        byte[] byteArray = Base64.decode(base64String, Base64.DEFAULT);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                        location.setImageBitmap(bitmap);
+                        if(document.getBoolean("ImageMap")){
+                            String base64String = document.getString("imageMap");
+                            byte[] byteArray = Base64.decode(base64String, Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                            location.setImageBitmap(bitmap);
+                        }
+                        else {
+                            location.setImageResource(android.R.color.transparent);
+                        }
                     }
                     Log.d(String.valueOf(data), "onComplete: dataList");
                 }
