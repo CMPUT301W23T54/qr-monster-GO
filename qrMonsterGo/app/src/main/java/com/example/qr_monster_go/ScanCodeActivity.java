@@ -98,7 +98,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
                 // add username and location to codes player list then add code to the database
                 code.addPlayer(getIntent().getExtras().getString("username"));
-                code.geolocation = Glocation;
+                code.setGeolocation(Glocation);
+                code.setImageMap(GImageMap);
                 dc.addElement(code);
             }
         }
