@@ -1,6 +1,8 @@
 package com.example.qr_monster_go;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -12,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ImageCaptureActivity extends AppCompatActivity {
@@ -49,7 +53,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                //pass
+                //***//
             }
         });
 
@@ -60,9 +64,11 @@ public class ImageCaptureActivity extends AppCompatActivity {
                 camera.takePicture(null, null, new Camera.PictureCallback() {
                     @Override
                     public void onPictureTaken(byte[] bytes, Camera camera) {
+                        byte[] scaledBytes = scaleImage(bytes);
+
                         // add image map to intent and finish activity
                         Intent intent = new Intent();
-                        intent.putExtra("imageMap", bytes);
+                        intent.putExtra("imageMap", scaledBytes);
                         setResult(0, intent);
 
                         finish();
@@ -70,5 +76,15 @@ public class ImageCaptureActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private byte[] scaleImage(byte[] data) {
+        Bitmap map = BitmapFactory.decodeByteArray(data, 0, data.length);
+        Bitmap scaledMap = Bitmap.createScaledBitmap(map, 480, 640, false);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        scaledMap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        return stream.toByteArray();
     }
 }
