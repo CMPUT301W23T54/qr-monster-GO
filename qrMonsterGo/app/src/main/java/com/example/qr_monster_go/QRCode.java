@@ -15,8 +15,8 @@ public class QRCode {
     String name;
     ArrayList<String> playerList;  //stores the players who have Scanned the code
     String geolocation;  //for now geolocation is represented as a string
-
     ArrayList<String> commentList;
+    byte[] imageMap;
 
 
     public QRCode(String code) {
@@ -143,6 +143,9 @@ public class QRCode {
         this.score = score;
     }
 
+    public void setGeolocation(String location) {this.geolocation = location;}
+
+    public void setImageMap(byte[] data){this.imageMap = data;}
 
     public String getName() {
         return name;
@@ -156,5 +159,7 @@ public class QRCode {
     public String getGeolocation() { return geolocation; }
 
     public ArrayList<String> getCommentList() {return commentList;}
+
+    public byte[] getImageMap() {return imageMap;}
 
 }

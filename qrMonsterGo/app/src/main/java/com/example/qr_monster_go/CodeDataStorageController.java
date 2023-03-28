@@ -2,6 +2,7 @@ package com.example.qr_monster_go;
 
 import static android.content.ContentValues.TAG;
 
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -86,6 +87,8 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
     public void addElement( QRCode code) {
         CollectionReference codeCollectionReference = db.getCollectionReference("CodeCollection");
 
+        String base64String = Base64.encodeToString(code.getImageMap(), Base64.DEFAULT);
+
         Map<String, Object> curCodeMap = new HashMap<>();
         curCodeMap.put("code", code.getCode());
         curCodeMap.put("score", code.getScore());
@@ -93,6 +96,7 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
         curCodeMap.put("playerList", code.getPlayerList());
         curCodeMap.put("location", code.getGeolocation());
         curCodeMap.put("comments", code.getCommentList());
+        curCodeMap.put("imageMap", base64String);
 
         DocumentReference doc = codeCollectionReference.document(code.getCode());
 
