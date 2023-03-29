@@ -84,6 +84,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
+            Log.d(String.valueOf(dc.isCodeAlreadyScanned(code.getCode())), "scanResultData: alreadyScanned");
+
             if (dc.isCodeAlreadyScanned(code.getCode())) {
                 // 1. check if player has already scanned code
                 // 2. if not: add player to codes player list here

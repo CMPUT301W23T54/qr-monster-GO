@@ -1,9 +1,11 @@
 package com.example.qr_monster_go;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.hash.Hashing;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
