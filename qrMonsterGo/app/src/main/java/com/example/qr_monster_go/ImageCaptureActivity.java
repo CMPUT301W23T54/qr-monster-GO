@@ -3,6 +3,7 @@ package com.example.qr_monster_go;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -82,10 +83,18 @@ public class ImageCaptureActivity extends AppCompatActivity {
     private byte[] scaleImage(byte[] data) {
         Bitmap map = BitmapFactory.decodeByteArray(data, 0, data.length);
         Bitmap scaledMap = Bitmap.createScaledBitmap(map, 480, 640, false);
+        scaledMap = rotateImage(scaledMap);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         scaledMap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
         return stream.toByteArray();
+    }
+
+    private Bitmap rotateImage(Bitmap image) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        return Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), matrix, true);
     }
 }
