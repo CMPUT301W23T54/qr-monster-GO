@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#F8F5F5"
-                android:drawableStart="@drawable/baseline_location_on_24"
+                android:drawableStart="@drawable/baseline_search_24"
                 android:drawableTint="@android:color/holo_red_light"
                 android:drawablePadding="10dp"
                 android:hint="Search location"
