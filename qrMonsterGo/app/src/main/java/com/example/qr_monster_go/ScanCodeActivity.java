@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,8 +40,13 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.hash.Hashing;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 /**
  * This activity is where the user can scan a code
@@ -74,8 +80,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     @Override
     public void scanResultData() {
         if (Gcontent != null) {
-            Toast.makeText(this, Gcontent, Toast.LENGTH_LONG).show();
-
             // generate SHA-256 hash of code
             String hashValue = Hashing.sha256()
                     .hashString(Gcontent, StandardCharsets.UTF_8)
@@ -83,36 +87,63 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
             // create new QRCode object from the contents of the scanned code
             QRCode code = new QRCode(hashValue);
-
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
-            Log.d(String.valueOf(dc.isCodeAlreadyScanned(code.getCode())), "scanResultData: alreadyScanned");
+            // check if the document is already in the database(code has already been scanned)
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference codeCollection = db.collection("CodeCollection");
+            DocumentReference ref = codeCollection.document(code.getCode());
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            ArrayList<String> playerList = (ArrayList<String>) document.get("playerList");
+                            if (playerList.contains(getIntent().getExtras().getString("username"))) {
+                                Toast.makeText(getApplicationContext(), "You have already scanned this code", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                code.setPlayerList(playerList);
 
-            if (dc.isCodeAlreadyScanned(code.getCode())) {
-                // 1. check if player has already scanned code
-                // 2. if not: add player to codes player list here
-            }
-            else {
+                                if (Glocation == null) {
+                                    Glocation = (String) document.get("location");
+                                }
+                                if (GImageMap == null) {
+                                    GImageMap =  Base64.decode((String) document.get("imageMap"), Base64.DEFAULT);
+                                }
 
+                                code.addPlayer(getIntent().getExtras().getString("username"));
+                                code.setGeolocation(Glocation);
+                                code.setImageMap(GImageMap);
+                                dc.addElement(code);
+                            }
 
+                        }
+                        else {
+                            code.addPlayer(getIntent().getExtras().getString("username"));
+                            code.setGeolocation(Glocation);
+                            code.setImageMap(GImageMap);
+                            dc.addElement(code);
+                        }
 
-                // add username and location to codes player list then add code to the database
-                code.addPlayer(getIntent().getExtras().getString("username"));
-                code.setGeolocation(Glocation);
-                code.setImageMap(GImageMap);
-                dc.addElement(code);
-            }
+                        // set all values back to null for next scan after scan has been processed
+                        Gcontent = null;
+                        GcodeFormat = null;
+                        Glocation = null;
+                        GImageMap = null;
+                    }
+                    else {
+                        Log.d("Something went wrong loading the document", "onComplete: error");
+                    }
+                }
+            });
+
         }
         else {
             // display toast with No Results message
             Toast.makeText(this, "No Results", Toast.LENGTH_LONG).show();
         }
-
-        // set all values back to null for next scan after scan has been processed
-        Gcontent = null;
-        GcodeFormat = null;
-        Glocation = null;
-        GImageMap = null;
 
     }
 
@@ -211,8 +242,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 Glocation = String.valueOf(latitude) +"X"+String.valueOf(longitude);
 
                                 Log.d("location", Glocation);
-                                Toast toast = Toast.makeText(getApplicationContext(), Glocation, Toast.LENGTH_LONG);
-                                toast.show();
                             }
                         }
                     }, Looper.getMainLooper());
