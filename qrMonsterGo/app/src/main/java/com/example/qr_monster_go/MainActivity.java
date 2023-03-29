@@ -218,4 +218,17 @@ public class MainActivity extends AppCompatActivity {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         return email.matches(emailPattern);
     }
+
+    // if user presses back arrow to get to login page redirect to home page
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String existing = sharedPreferences.getString(key, null);
+        //Checks if the user has signed up already and redirect to home page if they have
+        if (existing != null) {
+            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+            startActivity(intent);
+        }
+    }
 }

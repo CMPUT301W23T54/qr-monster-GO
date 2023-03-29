@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.SharedPreferencesKt;
@@ -54,12 +55,13 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
     Button scanButton;
     ImageButton returnButton;
 
-    boolean addLocation = false;
     private LocationRequest locationRequest;
     private String Glocation; // global location
-    boolean addImage = false;
+
     String GcodeFormat; // global code format
     String Gcontent; // global content
+
+    byte[] GImageMap;
 
     /**
      * This function displays a Toast with the content of the code then creates
@@ -84,14 +86,20 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
             CodeDataStorageController dc = new CodeDataStorageController(new QrMonsterGoDB());
 
+            Log.d(String.valueOf(dc.isCodeAlreadyScanned(code.getCode())), "scanResultData: alreadyScanned");
+
             if (dc.isCodeAlreadyScanned(code.getCode())) {
                 // 1. check if player has already scanned code
                 // 2. if not: add player to codes player list here
             }
             else {
+
+
+
                 // add username and location to codes player list then add code to the database
                 code.addPlayer(getIntent().getExtras().getString("username"));
-                code.geolocation = Glocation;
+                code.setGeolocation(Glocation);
+                code.setImageMap(GImageMap);
                 dc.addElement(code);
             }
         }
@@ -99,14 +107,14 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
             // display toast with No Results message
             Toast.makeText(this, "No Results", Toast.LENGTH_LONG).show();
         }
+
+        // set all values back to null for next scan after scan has been processed
+        Gcontent = null;
+        GcodeFormat = null;
+        Glocation = null;
+        GImageMap = null;
+
     }
-
-//    @Override --implement later--
-//    public void setLocationChoice() {
-//        this.addLocation = true;
-//    }
-
-
 
 
     @Override
@@ -201,7 +209,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
 
                                 Glocation = String.valueOf(latitude) +"X"+String.valueOf(longitude);
-                                scanResultData();
+
                                 Log.d("location", Glocation);
                                 Toast toast = Toast.makeText(getApplicationContext(), Glocation, Toast.LENGTH_LONG);
                                 toast.show();
@@ -272,4 +280,26 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
     }
 
+    public void startImageActivity() {
+        Intent intent = new Intent(ScanCodeActivity.this, ImageCaptureActivity.class);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // check if correct request code has been sent back
+        if (requestCode == 0) {
+            if (data != null) {
+                GImageMap = data.getByteArrayExtra("imageMap");
+            }
+            else {
+                GImageMap = null;
+            }
+
+            scanResultData();
+
+        }
+    }
 }

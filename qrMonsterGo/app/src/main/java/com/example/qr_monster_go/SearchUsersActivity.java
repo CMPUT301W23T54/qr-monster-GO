@@ -67,13 +67,13 @@ public class SearchUsersActivity extends AppCompatActivity {
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
-                    CollectionReference usersReference = db.getCollectionReference("users");
-                    usersReference.whereEqualTo("name", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    CollectionReference usersReference = db.getCollectionReference("PlayerCollection");
+                    usersReference.whereEqualTo("username", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String name = document.get("name").toString();
+                                    String name = document.get("username").toString();
                                     data.add(name);
                                 }
                                 users.setAdapter(usersAdapter);

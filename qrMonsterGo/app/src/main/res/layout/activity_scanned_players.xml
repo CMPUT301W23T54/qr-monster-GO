@@ -12,8 +12,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
         app:srcCompat="@android:drawable/ic_menu_revert"
         android:contentDescription="@string/return_button_description"/>
+=======
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+>>>>>>> main
 
     <ListView
         android:id="@+id/users"
@@ -25,5 +29,67 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </ListView>
+
+    <ListView
+        android:id="@+id/userComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cooments_visual"
+        tools:layout_editor_absoluteX="0dp">
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add Comments"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addComments"
+        app:layout_constraintStart_toEndOf="@+id/return_button">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/visual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/users"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/addComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/cooments_visual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Comments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
+
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_location_on_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
