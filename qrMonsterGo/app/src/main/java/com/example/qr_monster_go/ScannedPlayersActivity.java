@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ import java.util.List;
 
 public class ScannedPlayersActivity extends AppCompatActivity {
     ArrayList<String> data;
+    ImageView location;
     ArrayList<String> commentsData;
     ListView users;
     ListView usersComments;
@@ -51,6 +56,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
         returnButton = findViewById(R.id.return_button);
         usersComments = findViewById(R.id.userComments);
         users = findViewById(R.id.users);
+        location = findViewById(R.id.location);
         data = new ArrayList<>();
         commentsData = new ArrayList<>();
         usersAdapter = new ArrayAdapter<>(this, R.layout.display, data);
@@ -75,6 +81,15 @@ public class ScannedPlayersActivity extends AppCompatActivity {
                         commentsData.addAll(review);
                         users.setAdapter(usersAdapter);
                         usersComments.setAdapter(commentsAdapter);
+                        if(document.contains("imageMap")){
+                            String base64String = document.getString("imageMap");
+                            byte[] byteArray = Base64.decode(base64String, Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                            location.setImageBitmap(bitmap);
+                        }
+                        else {
+                            location.setImageResource(android.R.color.transparent);
+                        }
                     }
                     Log.d(String.valueOf(data), "onComplete: dataList");
                 }
