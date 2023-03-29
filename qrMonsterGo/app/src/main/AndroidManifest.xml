@@ -76,7 +76,8 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".ImageCaptureActivity">
+            android:name=".ImageCaptureActivity"
+            android:screenOrientation="locked">
         </activity>
     </application>
 
