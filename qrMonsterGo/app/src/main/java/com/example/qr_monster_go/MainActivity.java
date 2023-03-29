@@ -131,7 +131,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-        startActivity(intent);
+        String existing = sharedPreferences.getString(key, null);
+        //Checks if the user has signed up already and redirect to home page if they have
+        if (existing != null) {
+            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+            startActivity(intent);
+        }
     }
 }
