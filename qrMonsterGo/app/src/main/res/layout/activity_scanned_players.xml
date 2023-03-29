@@ -12,12 +12,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
         app:srcCompat="@android:drawable/ic_menu_revert"
         android:contentDescription="@string/return_button_description"/>
-=======
-        app:srcCompat="@android:drawable/ic_menu_revert" />
->>>>>>> main
 
     <ListView
         android:id="@+id/users"
@@ -35,6 +31,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/cooments_visual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
     </ListView>
