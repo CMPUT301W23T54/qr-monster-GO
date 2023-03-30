@@ -145,6 +145,8 @@ public class QRCode {
 
     public void setGeolocation(String location) {this.geolocation = location;}
 
+    public void setPlayerList(ArrayList<String> newList) {this.playerList = newList;}
+
     public void setImageMap(byte[] data){this.imageMap = data;}
 
     public String getName() {

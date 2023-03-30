@@ -2,6 +2,7 @@
     <string name="app_name">qr-Monster-Go</string>
     <string name="scan_code_button_text">Scan Code</string>
     <string name="scan_code">Scan Code</string>
+    <string name="return_button_description">Return to previous screen</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="googleAPI">AIzaSyDOb3e5RKF_frViiEkW264ckxCvjxrB7a0</string>
     <string name="take_picture_button_text">Take Picture</string>
