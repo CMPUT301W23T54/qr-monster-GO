@@ -1,6 +1,9 @@
 package com.example.qr_monster_go;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +35,15 @@ public class PlayersAdapter extends ArrayAdapter<Player> {
         Player player = users.get(position);
         String score = player.getTotalScore().toString();
         String name = player.getUsername();
+        if (name.length() < 20){
+            while(name.length() < 20){
+                name += " ";
+            }
+        }
         TextView uName = view.findViewById(R.id.name);
         TextView scores = view.findViewById(R.id.scores);
-        uName.setText(name);
-        scores.setText(score);
+        uName.setText("Username: " + name);
+        scores.setText("Score: " + score);
         return view;
     }
 
