@@ -117,6 +117,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 code.setGeolocation(Glocation);
                                 code.setImageMap(GImageMap);
                                 dc.addElement(code);
+
+                                Toast.makeText(getApplicationContext(), "Code added!", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -125,6 +127,8 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                             code.setGeolocation(Glocation);
                             code.setImageMap(GImageMap);
                             dc.addElement(code);
+
+                            Toast.makeText(getApplicationContext(), "Code added!", Toast.LENGTH_SHORT).show();
                         }
 
                         // set all values back to null for next scan after scan has been processed
