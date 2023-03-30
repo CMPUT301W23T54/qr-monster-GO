@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,20 +11,17 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:fontFamily="">
-
     </TextView>
     <TextView
         android:id="@+id/scores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp">
-
     </TextView>
     <TextView
         android:id="@+id/highest_visual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </TextView>
 </LinearLayout>
 
