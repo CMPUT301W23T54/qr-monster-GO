@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    // these colors are from the color palette Material A400
+
+    <color name="red">#FF1744</color>
+    <color name="pinkish_red">#F50057</color>
+    <color name="magenta">#D500F9</color>
+    <color name="violet">#651FFF</color>
+    <color name="blue">#3D5AFE</color>
+    <color name="sky_blue">#2979FF</color>
+    <color name="light_blue">#00B0FF</color>
+    <color name="aqua">#00E5FF</color>
+    <color name="mint_green">#1DE9B6</color>
+    <color name="sage_green">#00E676</color>
+    <color name="lime_green">#76FF03</color>
+    <color name="yellowish_green">#C6FF00</color>
+    <color name="yellow">#FFEA00</color>
+    <color name="yellowish_orange">#FFC400</color>
+    <color name="light_orange">#FF9100</color>
+    <color name="orange">#FF3D00</color>
+
 </resources>
