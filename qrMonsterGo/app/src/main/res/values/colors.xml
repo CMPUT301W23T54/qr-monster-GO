@@ -2,7 +2,7 @@
 <resources>
 
     // these colors are from the color palette Material A400
-
+    <color name="white">#FFFFFF</color>
     <color name="red">#FF1744</color>
     <color name="pinkish_red">#F50057</color>
     <color name="magenta">#D500F9</color>
@@ -19,5 +19,6 @@
     <color name="yellowish_orange">#FFC400</color>
     <color name="light_orange">#FF9100</color>
     <color name="orange">#FF3D00</color>
+    <color name="black">#000000</color>
 
 </resources>
