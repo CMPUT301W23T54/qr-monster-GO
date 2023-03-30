@@ -88,14 +88,9 @@ public class PlayerActivity extends AppCompatActivity {
                     for (Integer i = 0; i < codes.size(); i++){
                         if( data.get(0).code.equals(codes.get(i).code)){
                             ranking = i + 1;
+                            playerRanking.setText("Ranked " + ranking + " for highest unique code!");
                         }
                     }
-                }
-                if(ranking != 0){
-                    playerRanking.setText("Ranked approximately " + ranking + " for highest unique code in the world!");
-                }
-                else{
-                    playerRanking.setText("");
                 }
             }
         });
