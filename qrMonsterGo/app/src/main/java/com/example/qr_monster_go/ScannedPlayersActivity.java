@@ -81,7 +81,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
                         commentsData.addAll(review);
                         users.setAdapter(usersAdapter);
                         usersComments.setAdapter(commentsAdapter);
-                        if(document.contains("imageMap")){
+                        if(document.contains("imageMap") && document.get("imageMap") != null){
                             String base64String = document.getString("imageMap");
                             byte[] byteArray = Base64.decode(base64String, Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
