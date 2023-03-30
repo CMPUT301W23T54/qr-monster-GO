@@ -28,7 +28,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +52,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private Marker marker;
+    private MarkerOptions markerOptions;
 
     @Nullable
     @Override
@@ -102,7 +107,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             String location = address.getAdminArea();
             double latitude = address.getLatitude();
             double longitude = address.getLongitude();
-            gotoLatLng(latitude, longitude, 17f);
+            gotoLatLng(latitude, longitude, 20f);
+            if (marker != null){
+                marker.remove();
+            }
+            markerOptions = new MarkerOptions();
+            markerOptions.title(location);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            markerOptions.position(new LatLng(latitude, longitude));
+            marker = mMap.addMarker(markerOptions);
         }
     }
 
@@ -138,7 +151,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                             @Override
                             public void onSuccess(Location location) {
                                 LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
                             }
                         });
                     }
