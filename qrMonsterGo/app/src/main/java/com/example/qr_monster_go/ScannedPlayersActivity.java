@@ -27,10 +27,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ScannedPlayersActivity extends AppCompatActivity {
     ArrayList<String> data;
@@ -64,7 +62,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
         users.setAdapter(usersAdapter);
         review = findViewById(R.id.review);
         review.setText("Players who have scanned the same code");
-        visual = findViewById(R.id.visual);
+        visual = findViewById(R.id.image);
         comments = findViewById(R.id.comments);
         addComments = findViewById(R.id.addComments);
         CollectionReference codesReference = db.getCollectionReference("CodeCollection");
