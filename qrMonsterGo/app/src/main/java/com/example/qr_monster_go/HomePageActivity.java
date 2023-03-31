@@ -18,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,8 +74,13 @@ public class HomePageActivity extends AppCompatActivity {
                     public void run() {
                         ArrayList<Integer> stats = new ArrayList<>();
                         stats = playerStats(sharedPreferences.getString(key, ""), x);
-                        visual.setText(codes.get(y).generateVisualRep(codes.get(y).code));
-                        handler.postDelayed(this,5000); // set time here to refresh textView
+                        if(codes.size() == 0){
+                            visual.setText("No codes scanned");
+                        }
+                        else{
+                            visual.setText(codes.get(y).generateVisualRep(codes.get(y).code));
+                        }
+                        handler.postDelayed(this,2500); // set time here to refresh textView
                         x += 1;
                         y += 1;
                         if(y == codes.size()){
