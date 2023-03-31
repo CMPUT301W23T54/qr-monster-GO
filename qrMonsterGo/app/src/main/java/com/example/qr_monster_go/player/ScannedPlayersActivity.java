@@ -107,9 +107,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScannedPlayersActivity.this, PlayerActivity.class);
-                intent.putExtra("username", uname);
-                startActivity(intent);
+                finish();
             }
         });
         addComments.setOnClickListener(new View.OnClickListener() {

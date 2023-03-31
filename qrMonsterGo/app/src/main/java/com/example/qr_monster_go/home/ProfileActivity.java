@@ -1,15 +1,18 @@
 package com.example.qr_monster_go.home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qr_monster_go.R;
 import com.example.qr_monster_go.database.QrMonsterGoDB;
@@ -26,9 +29,12 @@ public class ProfileActivity extends AppCompatActivity {
     TextView name;
     ImageButton backButton;
     ImageButton homeButton;
+    ImageButton viewButton;
 
     private codeListArrayAdapter adapter;
     private ArrayList<QRCode> codeDataList = new ArrayList<>();
+
+    private int location = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         name = findViewById(R.id.user_name);
         backButton = findViewById(R.id.back_button);
         homeButton = findViewById(R.id.home_button);
+        viewButton = findViewById(R.id.view_code_button);
         Intent intent = getIntent();
         String getName = intent.getStringExtra("username");
         name.setText(getName);
@@ -50,6 +57,28 @@ public class ProfileActivity extends AppCompatActivity {
                 codeDataList.addAll(list);
                 adapter.notifyDataSetChanged();
                 Log.d(String.valueOf(codeDataList), "onCallBack: callback");
+            }
+        });
+
+        codeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                location = index;
+            }
+        });
+
+        viewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(location == -1){
+                    Toast.makeText(ProfileActivity.this, "Code not selected", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Intent intent = new Intent(ProfileActivity.this, ScannedPlayersActivity.class);
+                    intent.putExtra("code", codeDataList.get(location).code);
+                    intent.putExtra("uname", getSharedPreferences("login", MODE_PRIVATE).getString("username", null));
+                    startActivityForResult(intent, 0);
+                }
             }
         });
 
@@ -95,6 +124,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
