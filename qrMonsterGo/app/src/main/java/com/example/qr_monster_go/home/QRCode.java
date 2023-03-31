@@ -1,6 +1,4 @@
-package com.example.qr_monster_go;
-
-import android.util.Log;
+package com.example.qr_monster_go.home;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,22 +9,31 @@ import java.util.List;
  * On creation this class generates a score and name based on
  * a SHA-256 hash from a scanned codes contents
  */
-public class ScannableCode {
-    String code;
-    int score;
+public class QRCode {
+    public String code;
+    public int score;
     String name;
     ArrayList<String> playerList;  //stores the players who have Scanned the code
     String geolocation;  //for now geolocation is represented as a string
+    ArrayList<String> commentList;
+    byte[] imageMap;
+
+    String visualRep;
 
 
-    public ScannableCode(String code) {
+
+    /**
+     * @param code
+     */
+    public QRCode(String code) {
         this.code = code;
         //calculate score in the constructor
         this.score = calculate_score(this.code);
-        this.name = generateName(this.code.substring(0, 2)); // only pass in first 2 characters(all that is needed for name generation)
+        this.name = generateName(this.code.substring(0, 7)); // only pass in a substring to avoid overflow when converting to binary
         this.playerList = new ArrayList<String>();
         this.geolocation = "";
-
+        this.commentList = new ArrayList<String>();
+        this.visualRep = generateVisualRep(this.code);
     }
 
     /**
@@ -122,6 +129,72 @@ public class ScannableCode {
         return builder.toString();
     }
 
+
+    public String generateVisualRep(String code){
+        String s1 = "       ____\n" ;
+        String s2 = "      /    \\\n";
+        String s3 = "    \\|      |/\n";
+        String s4 = "    @|  \\ / |@\n";
+        String s5 = "    /|  ◕ ◕ |\\\n" ;
+        String s6 = "     |   ^  |\n" ;
+        String s7 = "     |  \\_/ |\n" ;
+        String s8 = "      \\____/\n";
+
+
+        if(Character.isDigit(code.charAt(0))){
+            s1 = "       | | |\n";
+            s2 = "      ######\n";
+        }
+        if(Character.isLetterOrDigit(code.charAt(0))){
+            s1 = "/|   ----  /| \n";
+            s2 = "      ######  \n";
+        }
+        if((int)code.charAt(0) < 107){
+            s1 = "   {}{}||[]   \n";
+            s2 = "    -_    _-  \n";
+        }
+        if((int)code.charAt(0) < 115){
+            s1 = "   %^&*__))   \n";
+            s2 = "    &@&@**()  \n";
+        }
+        if(code.charAt(0) == '1' || code.charAt(0) == '2' || code.charAt(0) == '4'){
+            s1 = "       | | |\n";
+            s2 = "      ######\n";
+        }
+
+        if(code.charAt(1) == '1' || code.charAt(0) == '4'){
+            s3.replace('\\', ' ' );
+            s3.replace('/', ' ');
+            s4.replace('@', ' ');
+            s5.replace('\\', ' ' );
+            s5.replace('/', ' ');
+
+        }
+
+        if(code.charAt(2) == '1' || code.charAt(0) == '8'){
+            s4.replace('\\', '^');
+            s4.replace('/', '^');
+        }
+
+        if(code.charAt(3) == '1' || code.charAt(0) == '5'){
+            s6 = "     |   0) |\n";
+        }
+        if(code.charAt(4) == '1' || code.charAt(0) == '2'){
+            s7 = "     |  (==)|\n";
+        }
+
+        if(code.charAt(5) == '1' || code.charAt(0) == '2'){
+            s8 = "     | //// |\n";
+        }
+
+        if(code.charAt(6) == '1' || code.charAt(0) == '2'){
+            s5.replace('◕', 'x');
+        }
+
+        return s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 ;
+    }
+
+    
     public void addPlayer(String player) {
         this.playerList.add(player);
     }
@@ -142,6 +215,11 @@ public class ScannableCode {
         this.score = score;
     }
 
+    public void setGeolocation(String location) {this.geolocation = location;}
+
+    public void setPlayerList(ArrayList<String> newList) {this.playerList = newList;}
+
+    public void setImageMap(byte[] data){this.imageMap = data;}
 
     public String getName() {
         return name;
@@ -154,5 +232,8 @@ public class ScannableCode {
 
     public String getGeolocation() { return geolocation; }
 
+    public ArrayList<String> getCommentList() {return commentList;}
+
+    public byte[] getImageMap() {return imageMap;}
 
 }

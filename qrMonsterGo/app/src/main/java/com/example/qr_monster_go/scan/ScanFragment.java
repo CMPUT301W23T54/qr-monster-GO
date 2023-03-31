@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.scan;
 
 import android.content.Intent;
 import android.os.Bundle;

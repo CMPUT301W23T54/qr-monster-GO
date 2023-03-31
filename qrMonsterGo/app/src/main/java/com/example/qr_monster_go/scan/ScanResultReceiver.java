@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.scan;
 
 /**
  * This interface is to allow ScanCodeActivity to

@@ -1,11 +1,10 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.scan;
 
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 //import android.location.LocationRequest;
@@ -23,11 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.SharedPreferencesKt;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.home.QRCode;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.CodeDataStorageController;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationCallback;
