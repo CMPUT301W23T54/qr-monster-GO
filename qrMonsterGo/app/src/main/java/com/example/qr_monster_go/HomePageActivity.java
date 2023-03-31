@@ -73,7 +73,7 @@ public class HomePageActivity extends AppCompatActivity {
                     public void run() {
                         ArrayList<Integer> stats = new ArrayList<>();
                         stats = playerStats(sharedPreferences.getString(key, ""), x);
-                        visual.setText(codes.get(y).getName());
+                        visual.setText(codes.get(y).generateVisualRep(codes.get(y).code));
                         handler.postDelayed(this,5000); // set time here to refresh textView
                         x += 1;
                         y += 1;

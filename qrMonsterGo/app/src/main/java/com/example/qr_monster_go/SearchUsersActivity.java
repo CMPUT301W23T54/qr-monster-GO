@@ -60,21 +60,23 @@ public class SearchUsersActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 QrMonsterGoDB db = new QrMonsterGoDB();
                 String user = searchedUser.getText().toString();
                 String TAG = "DocSnippets";
-                // TODO: 3/13/2023 Need to add it so we can substring search and lowercase checks 
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
                     CollectionReference usersReference = db.getCollectionReference("PlayerCollection");
-                    usersReference.whereEqualTo("username", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    usersReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String name = document.get("username").toString();
-                                    data.add(name);
+                                    if (name.contains(user)){
+                                        data.add(name);
+                                    }
                                 }
                                 users.setAdapter(usersAdapter);
                                 if(data.size() == 0){
@@ -86,6 +88,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
                         }
                     });
+                    usersAdapter.notifyDataSetChanged();
                 }
                 else{
                     Toast.makeText(SearchUsersActivity.this, "Please enter a username to search", Toast.LENGTH_LONG).show();
@@ -105,5 +108,31 @@ public class SearchUsersActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getCodes(String username, dataCallback callback) {
+        //Code collection database instance
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
+
+        codes.whereArrayContains("playerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<QRCode> data = new ArrayList<>();
+                if(task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d((String) document.get("code"), "onComplete: codeFound");
+                        data.add(new QRCode((String) document.get("code")));
+                    }
+                    Log.d(String.valueOf(data), "onComplete: dataList");
+                }
+                else {
+                    Log.d("fail", "getCodes: fail");
+                }
+
+                callback.onCallBack(data);
+            }
+        });
+
     }
 }
