@@ -79,6 +79,8 @@ public class ScannedPlayersActivity extends AppCompatActivity {
                         commentsData.addAll(review);
                         users.setAdapter(usersAdapter);
                         usersComments.setAdapter(commentsAdapter);
+                        QRCode code = new QRCode(document.get("code").toString());
+                        visual.setText(code.generateVisualRep(document.get("code").toString()));
                         if(document.contains("imageMap") && document.get("imageMap") != null){
                             String base64String = document.getString("imageMap");
                             byte[] byteArray = Base64.decode(base64String, Base64.DEFAULT);
