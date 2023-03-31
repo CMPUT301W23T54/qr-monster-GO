@@ -18,7 +18,13 @@ public class QRCode {
     ArrayList<String> commentList;
     byte[] imageMap;
 
+    String visualRep;
 
+
+
+    /**
+     * @param code
+     */
     public QRCode(String code) {
         this.code = code;
         //calculate score in the constructor
@@ -27,7 +33,7 @@ public class QRCode {
         this.playerList = new ArrayList<String>();
         this.geolocation = "";
         this.commentList = new ArrayList<String>();
-
+        this.visualRep = generateVisualRep(this.code);
     }
 
     /**
@@ -123,6 +129,56 @@ public class QRCode {
         return builder.toString();
     }
 
+
+    public String generateVisualRep(String code){
+        String s1 = "       ____\n" ;
+        String s2 = "      /    \\\n";
+        String s3 = "    \\|      |/\n";
+        String s4 = "    @|  \\ / |@\n";
+        String s5 = "    /|  ◕ ◕ |\\\n" ;
+        String s6 = "     |   ^  |\n" ;
+        String s7 = "     |  \\_/ |\n" ;
+        String s8 = "      \\____/\n";
+
+
+        if(code.charAt(0) == '1'){
+            s1 = "       | | |\n";
+            s2 = "      ######\n";
+        }
+
+        if(code.charAt(1) == '1'){
+            s3.replace('\\', ' ' );
+            s3.replace('/', ' ');
+            s4.replace('@', ' ');
+            s5.replace('\\', ' ' );
+            s5.replace('/', ' ');
+
+        }
+
+        if(code.charAt(2) == '1'){
+            s4.replace('\\', '^');
+            s4.replace('/', '^');
+        }
+
+        if(code.charAt(3) == '1'){
+            s6 = "     |   0) |\n";
+        }
+        if(code.charAt(4) == '1'){
+            s7 = "     |  (==)|\n";
+        }
+
+        if(code.charAt(5) == '1'){
+            s8 = "     | //// |\n";
+        }
+
+        if(code.charAt(6) == '1'){
+            s5.replace('◕', 'x');
+        }
+
+        return s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 ;
+    }
+
+    
     public void addPlayer(String player) {
         this.playerList.add(player);
     }
