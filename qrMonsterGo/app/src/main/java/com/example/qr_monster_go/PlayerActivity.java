@@ -1,6 +1,7 @@
 package com.example.qr_monster_go;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -159,7 +160,7 @@ public class PlayerActivity extends AppCompatActivity {
                     Intent intent = new Intent(PlayerActivity.this, ScannedPlayersActivity.class);
                     intent.putExtra("code", data.get(location).code);
                     intent.putExtra("uname", getName);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 }
             }
         });
@@ -213,5 +214,10 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
