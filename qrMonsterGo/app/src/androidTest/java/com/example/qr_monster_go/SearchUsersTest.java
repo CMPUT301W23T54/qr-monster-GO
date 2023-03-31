@@ -1,17 +1,19 @@
 package com.example.qr_monster_go;
 
 import android.app.Activity;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import android.widget.EditText;
-import android.widget.ListView;
+
+import com.example.qr_monster_go.home.ProfileActivity;
+import com.example.qr_monster_go.home.SearchUsersActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

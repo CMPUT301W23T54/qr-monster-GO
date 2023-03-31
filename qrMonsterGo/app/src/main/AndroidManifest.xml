@@ -36,29 +36,29 @@
             android:value="@string/googleAPI" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ScannedPlayersActivity"
+            android:name=".player.ScannedPlayersActivity"
             android:exported="false" />
         <activity
-            android:name=".LeaderboardsActivity"
+            android:name=".home.LeaderboardsActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayerActivity"
+            android:name=".player.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".home.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchUsersActivity"
+            android:name=".home.SearchUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
+            android:name=".home.HomePageActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScanCodeActivity"
+            android:name=".scan.ScanCodeActivity"
             android:label="CodeScanningActivity"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -76,7 +76,7 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".ImageCaptureActivity"
+            android:name=".scan.ImageCaptureActivity"
             android:screenOrientation="locked">
         </activity>
     </application>

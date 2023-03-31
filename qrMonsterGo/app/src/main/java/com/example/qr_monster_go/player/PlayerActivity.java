@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.player;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qr_monster_go.home.QRCode;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.home.codeListArrayAdapter;
+import com.example.qr_monster_go.home.dataCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -21,8 +26,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.model.Document;
-import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
 import java.util.Collections;

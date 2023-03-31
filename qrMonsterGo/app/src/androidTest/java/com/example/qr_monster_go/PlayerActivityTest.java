@@ -2,6 +2,8 @@ package com.example.qr_monster_go;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule ;
+
+import com.example.qr_monster_go.player.PlayerActivity;
 import com.robotium.solo.Solo ;
 
 import org.junit.After;
