@@ -38,7 +38,7 @@
 
     <EditText
         android:id="@+id/comments"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Add Comments"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,8 +83,8 @@
 
     <ImageView
         android:id="@+id/location"
-        android:layout_width="137dp"
-        android:layout_height="117dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
