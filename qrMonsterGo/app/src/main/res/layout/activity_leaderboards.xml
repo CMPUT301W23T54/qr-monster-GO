@@ -10,8 +10,8 @@
         android:id="@+id/players"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/home_button2"
         app:layout_constraintTop_toTopOf="parent">
     </ListView>
