@@ -87,7 +87,12 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
     public void addElement( QRCode code) {
         CollectionReference codeCollectionReference = db.getCollectionReference("CodeCollection");
 
-        String base64String = Base64.encodeToString(code.getImageMap(), Base64.DEFAULT);
+        String base64String = null;
+        if (code.getImageMap() != null) {
+            if (code.getImageMap().length != 0) {
+                base64String = Base64.encodeToString(code.getImageMap(), Base64.DEFAULT);
+            }
+        }
 
         Map<String, Object> curCodeMap = new HashMap<>();
         curCodeMap.put("code", code.getCode());
@@ -104,9 +109,9 @@ public class CodeDataStorageController implements DataStorageController<QRCode>{
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d("RRG", "document is successfully added");
-                        }else{
+                        } else {
                             Log.d("RRG", "something went wrong");
                         }
                     }
