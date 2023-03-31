@@ -1,9 +1,13 @@
 package com.example.qr_monster_go;
 
-import android.widget.EditText;
-
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule ;
+
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.home.LeaderboardsActivity;
+import com.example.qr_monster_go.home.SearchUsersActivity;
+import com.example.qr_monster_go.player.PlayerActivity;
+import com.example.qr_monster_go.scan.ScanCodeActivity;
 import com.robotium.solo.Solo ;
 
 import org.junit.After;
