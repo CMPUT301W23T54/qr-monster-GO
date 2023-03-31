@@ -9,6 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This dialog appears after the ConfirmLocationDialog when user finishes scanning a code.
+ * It prompts the user to record photo of the location or not
+ * If yes to taking a photo, this dialog calls startImageActivity on the parent activity
+ * If no to recording location, dialog calls scanResultData(), skipping the image
+ */
 public class ConfirmImageDialog extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
@@ -27,6 +33,7 @@ public class ConfirmImageDialog extends DialogFragment {
                     parent.scanResultData();
                 })
                 .setPositiveButton("Yes", (dialog, which) -> {
+                    // start image capturing activity
                     ScanCodeActivity parent = (ScanCodeActivity) this.getActivity();
                     assert parent != null;
                     parent.startImageActivity();
