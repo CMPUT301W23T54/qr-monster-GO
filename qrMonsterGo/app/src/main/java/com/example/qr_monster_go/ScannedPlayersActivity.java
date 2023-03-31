@@ -122,6 +122,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
                                             ArrayList<String> update = new ArrayList<>();
                                             DocumentReference code = db.getDocumentReference(id, "CodeCollection");
                                             code.update("comments", FieldValue.arrayUnion(newComments + "//"));
+                                            commentsData.add(newComments);
                                             commentsAdapter.notifyDataSetChanged();
                                         }
                                     }
