@@ -100,14 +100,18 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
+
+                        // if this code has already been found by the user or another player
                         if (document.exists()) {
                             ArrayList<String> playerList = (ArrayList<String>) document.get("playerList");
+                            // check if user has already scanned the code
                             if (playerList.contains(getIntent().getExtras().getString("username"))) {
                                 Toast.makeText(getApplicationContext(), "You have already scanned this code", Toast.LENGTH_LONG).show();
                             }
                             else {
                                 code.setPlayerList(playerList);
 
+                                // add database values to code if none were added by this user
                                 if (Glocation == null) {
                                     Glocation = (String) document.get("location");
                                 }
@@ -115,6 +119,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                     GImageMap =  Base64.decode((String) document.get("imageMap"), Base64.DEFAULT);
                                 }
 
+                                // update all data on the code and upload to database
                                 code.addPlayer(getIntent().getExtras().getString("username"));
                                 code.setGeolocation(Glocation);
                                 code.setImageMap(GImageMap);
@@ -125,6 +130,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
                         }
                         else {
+                            // update all data on the code and upload to database
                             code.addPlayer(getIntent().getExtras().getString("username"));
                             code.setGeolocation(Glocation);
                             code.setImageMap(GImageMap);
@@ -315,6 +321,10 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
     }
 
+    /**
+     * Function launches the image capturing activity
+     * called through ConfirmImageDialog
+     */
     public void startImageActivity() {
         Intent intent = new Intent(ScanCodeActivity.this, ImageCaptureActivity.class);
         startActivityForResult(intent, 0);
