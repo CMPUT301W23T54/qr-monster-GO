@@ -20,12 +20,11 @@
 
     <ImageButton
         android:id="@+id/search_users_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Search users"
         app:srcCompat="@android:drawable/ic_menu_search" />
 
     <EditText
@@ -34,21 +33,19 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/search_users_button"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="Searched user"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/users">
+        android:paddingTop="10dp">
     </EditText>
 
     <ListView
         android:id="@+id/users"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/return_button"
-        app:layout_constraintTop_toBottomOf="@+id/searched_user"
         android:paddingTop="50dp"
         android:paddingBottom="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/searched_user">
 
     </ListView>
 
