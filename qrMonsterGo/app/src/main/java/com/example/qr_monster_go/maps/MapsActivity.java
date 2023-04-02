@@ -6,11 +6,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.scan.ScanCodeActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.example.qr_monster_go.databinding.ActivityMapsBinding;
@@ -34,12 +37,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-                    case R.id.map:
+                    case R.id.current:
                         ReplaceFragment(new MapsFragment());
                         break;
 
-                    case R.id.search:
-                        break;
+                    case R.id.back:
+                        startActivity(new Intent(MapsActivity.this, HomePageActivity.class));
                 }
                 return true;
             }
