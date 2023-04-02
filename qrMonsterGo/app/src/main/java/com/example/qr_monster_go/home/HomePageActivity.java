@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.home;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,16 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.qr_monster_go.player.PlayerActivity;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
+import com.example.qr_monster_go.maps.MapsActivity;
+import com.example.qr_monster_go.scan.ScanCodeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 //Home page of the application. Allows user to navigate through different
 // functionalities and activities of the application through buttons and shows the user various player stats

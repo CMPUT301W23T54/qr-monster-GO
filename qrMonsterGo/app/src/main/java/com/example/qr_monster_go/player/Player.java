@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.player;
 
 import static android.content.ContentValues.TAG;
 

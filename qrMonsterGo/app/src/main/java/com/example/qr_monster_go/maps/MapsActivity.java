@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.maps;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,14 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.example.qr_monster_go.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.qr_monster_go.databinding.ActivityMapsBinding;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -60,9 +58,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fragmentTransaction.commit();
     }
 
-
+    /**
+     * Doesn't do anything (I think)
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("map", "MapsActivity onMapReady");
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera

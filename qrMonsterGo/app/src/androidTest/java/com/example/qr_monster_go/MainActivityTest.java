@@ -1,22 +1,9 @@
 package com.example.qr_monster_go;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.widget.EditText;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule ;
+
+import com.example.qr_monster_go.home.MainActivity;
 import com.robotium.solo.Solo ;
 
 import org.junit.After;

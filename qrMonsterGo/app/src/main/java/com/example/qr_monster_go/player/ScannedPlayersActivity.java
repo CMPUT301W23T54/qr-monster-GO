@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.player;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qr_monster_go.home.QRCode;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -30,6 +33,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Used in PlayerActivity
+ */
 public class ScannedPlayersActivity extends AppCompatActivity {
     ArrayList<String> data;
     ImageView location;
@@ -101,9 +107,7 @@ public class ScannedPlayersActivity extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScannedPlayersActivity.this, PlayerActivity.class);
-                intent.putExtra("username", uname);
-                startActivity(intent);
+                finish();
             }
         });
         addComments.setOnClickListener(new View.OnClickListener() {
