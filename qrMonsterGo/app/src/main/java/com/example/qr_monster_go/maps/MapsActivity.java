@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.qr_monster_go.R;
@@ -57,9 +58,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fragmentTransaction.commit();
     }
 
-
+    /**
+     * Doesn't do anything (I think)
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("map", "MapsActivity onMapReady");
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera

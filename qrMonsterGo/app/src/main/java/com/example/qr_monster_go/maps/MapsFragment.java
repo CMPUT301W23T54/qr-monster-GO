@@ -11,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.example.qr_monster_go.databinding.FragmentMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -36,6 +38,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -56,6 +61,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private Marker marker;
     private MarkerOptions markerOptions;
 
+    private CollectionReference codes;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,6 +72,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Instantiate codes collection reference to query geolocations
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        codes = dbCodes.getCollectionReference("CodeCollection");
 
         mapInitialize();
 
@@ -129,6 +140,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        Log.d("map", "MapsFragment onMapReady");
         mMap = googleMap;
         Dexter.withContext(getContext())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -141,6 +153,41 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
                             return;
                         }
+
+                        // Adding all of the geolocations of QR codes to the map (geolocation must be non-null)
+                        codes.whereNotEqualTo("location", null)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    Log.d("geolocation", "We're getting code data in MapsFragment");
+                                    List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
+                                    for (DocumentSnapshot snapshot: snapshotList) {
+                                        Log.d("geolocation", snapshot.getString("location"));
+
+                                        // coordinate format is "longitudeXlatitude"
+                                        String coordinates = snapshot.getString("location");
+                                        String[] splits = coordinates.split("X");
+                                        Double longitude = Double.parseDouble(splits[0]);
+                                        Double latitude = Double.parseDouble(splits[1]);
+
+                                        // Adding a new marker with the QR code's name as the title
+                                        markerOptions = new MarkerOptions();
+                                        markerOptions.title(snapshot.getString("name"));
+                                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                        markerOptions.position(new LatLng(longitude, latitude));
+                                        marker = mMap.addMarker(markerOptions);
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("geolocation", "failure to grab location from database");
+                                }
+                            });
+
+
                         mMap.setMyLocationEnabled(true);
                         fusedLocationProviderClient.getLastLocation().addOnFailureListener(new OnFailureListener() {
                             @Override

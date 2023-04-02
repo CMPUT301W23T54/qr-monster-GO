@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.qr_monster_go.R;
 import com.example.qr_monster_go.database.QrMonsterGoDB;
+import com.example.qr_monster_go.player.ScannedPlayersActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
