@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -254,6 +255,9 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 Glocation = String.valueOf(latitude) +"X"+String.valueOf(longitude);
 
                                 Log.d("location", Glocation);
+
+                                DialogFragment confirmImageDialog = new ConfirmImageDialog();
+                                confirmImageDialog.show(getSupportFragmentManager(), "image");
                             }
                         }
                     }, Looper.getMainLooper());
