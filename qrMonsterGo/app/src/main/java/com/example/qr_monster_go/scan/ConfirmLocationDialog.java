@@ -38,8 +38,6 @@ public class ConfirmLocationDialog extends DialogFragment {
                     assert parent != null;
                     parent.setCurrentLocation();
 
-                    DialogFragment confirmImageDialog = new ConfirmImageDialog();
-                    confirmImageDialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "image");
                 })
                 .create();
     }
