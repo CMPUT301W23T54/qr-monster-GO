@@ -18,7 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.example.qr_monster_go.databinding.ActivityMapsBinding;
 import com.google.android.material.navigation.NavigationBarView;
-
+//Maps activity, shows map of location
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;

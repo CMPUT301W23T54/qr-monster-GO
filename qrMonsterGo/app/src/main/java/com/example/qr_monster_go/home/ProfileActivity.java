@@ -100,6 +100,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Gets a list of all codes that the user has scanned and returns it to the view
+     * @param username
+     * @param callback
+     */
     private void getCodes(String username, dataCallback callback) {
         //Code collection database instance
         QrMonsterGoDB dbCodes = new QrMonsterGoDB();

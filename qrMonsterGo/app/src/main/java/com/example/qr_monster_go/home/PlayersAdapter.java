@@ -16,7 +16,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.ArrayList;
 
 /**
- * Used in LeaderboardsActivity
+ * Used in LeaderboardsActivity, allows for a list of players to be stored and adapted to view
  */
 public class PlayersAdapter extends ArrayAdapter<Player> {
     private ArrayList<Player> users;

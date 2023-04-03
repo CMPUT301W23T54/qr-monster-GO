@@ -34,6 +34,11 @@ public class LeaderboardsActivity extends AppCompatActivity {
 
     TextView leaderboardBanner;
 
+    /**
+     * Creates and adds leaderboard information to the view
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
