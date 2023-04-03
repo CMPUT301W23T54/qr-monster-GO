@@ -167,6 +167,9 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_code);
 
+        getSupportActionBar().setTitle("QR Monster Scan"); // action bar title
+
+
         locationRequest = com.google.android.gms.location.LocationRequest.create();
         locationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);

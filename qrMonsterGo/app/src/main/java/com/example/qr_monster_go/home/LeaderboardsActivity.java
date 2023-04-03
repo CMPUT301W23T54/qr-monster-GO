@@ -34,6 +34,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboards);
+        getSupportActionBar().setTitle("Leaderboard"); // action bar title
         players = findViewById(R.id.players);
         playersinfo = new ArrayList<>();
         playerArrayAdapter = new PlayersAdapter(this, playersinfo);

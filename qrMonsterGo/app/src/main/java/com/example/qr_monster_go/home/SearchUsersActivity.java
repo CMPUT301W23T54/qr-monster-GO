@@ -38,6 +38,7 @@ public class SearchUsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_users);
+        getSupportActionBar().setTitle("Search For Users"); // action bar title
         returnButton = findViewById(R.id.return_button);
         searchButton = findViewById(R.id.search_users_button);
         searchedUser = findViewById(R.id.searched_user);

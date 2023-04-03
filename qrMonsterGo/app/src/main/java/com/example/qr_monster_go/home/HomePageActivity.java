@@ -49,6 +49,7 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        getSupportActionBar().setTitle("QR Monster GO"); // action bar title
         //All textviews
         totalScore = findViewById(R.id.total_score);
         scannedCodes = findViewById(R.id.scanned_codes);
