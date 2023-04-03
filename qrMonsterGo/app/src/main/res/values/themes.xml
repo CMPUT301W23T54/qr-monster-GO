@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>"
+
 
     </style>
 </resources>
