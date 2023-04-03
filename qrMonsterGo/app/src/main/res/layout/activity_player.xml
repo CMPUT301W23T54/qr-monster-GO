@@ -24,6 +24,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
         android:scrollbars="vertical"
+        android:choiceMode="singleChoice"
         app:layout_constraintBottom_toTopOf="@+id/delete_button"
         app:layout_constraintTop_toBottomOf="@+id/ranking"
         tools:layout_editor_absoluteX="-1dp">
