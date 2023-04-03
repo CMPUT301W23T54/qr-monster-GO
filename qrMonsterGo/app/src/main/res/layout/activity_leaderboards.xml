@@ -10,11 +10,14 @@
         android:id="@+id/players"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
-        android:paddingBottom="60dp"
+        android:layout_marginTop="100dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="135dp"
         app:layout_constraintBottom_toTopOf="@+id/home_button2"
-        app:layout_constraintTop_toTopOf="parent">
-    </ListView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboard_banner" />
+
     <ImageButton
         android:id="@+id/home_button2"
         android:layout_width="0dp"
@@ -26,4 +29,17 @@
         android:contentDescription="Return to home screen"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.15"/>
+
+    <TextView
+        android:id="@+id/leaderboard_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

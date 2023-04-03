@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.qr_monster_go.R;
 import com.example.qr_monster_go.database.QrMonsterGoDB;
@@ -30,6 +31,9 @@ public class LeaderboardsActivity extends AppCompatActivity {
     ArrayList<Player> playersinfo;
     QrMonsterGoDB db = new QrMonsterGoDB();
     ImageButton homeButton;
+
+    TextView leaderboardBanner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,10 @@ public class LeaderboardsActivity extends AppCompatActivity {
         playerArrayAdapter = new PlayersAdapter(this, playersinfo);
         players.setAdapter(playerArrayAdapter);
         homeButton = findViewById(R.id.home_button2);
+        leaderboardBanner = findViewById(R.id.leaderboard_banner);
+
+        leaderboardBanner.setText("Leaderboard");
+
         CollectionReference users = db.getCollectionReference("PlayerCollection");
         users.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

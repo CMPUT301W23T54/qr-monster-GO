@@ -11,10 +11,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please enter your information to sign up!"
-        android:textSize="22sp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:text="Please enter your information to sign up!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

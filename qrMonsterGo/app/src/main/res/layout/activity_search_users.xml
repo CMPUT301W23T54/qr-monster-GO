@@ -20,33 +20,38 @@
 
     <ImageButton
         android:id="@+id/search_users_button"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+        android:contentDescription="Search users"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintVertical_bias="0" />
 
     <EditText
         android:id="@+id/searched_user"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:hint="Search user"
         app:layout_constraintEnd_toStartOf="@+id/search_users_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingTop="10dp">
+        android:paddingTop="45dp"
+        android:maxLines="1">
     </EditText>
 
     <ListView
         android:id="@+id/users"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="50dp"
-        android:paddingBottom="50dp"
-        android:choiceMode="singleChoice"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searched_user">
+        app:layout_constraintStart_toEndOf="@+id/search_users_button"
+        app:layout_constraintTop_toBottomOf="@+id/searched_user"
+        app:layout_constraintBottom_toTopOf="@id/return_button"
+        app:layout_constraintVertical_bias="0.15">
 
     </ListView>
 

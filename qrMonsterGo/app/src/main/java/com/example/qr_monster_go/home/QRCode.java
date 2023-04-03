@@ -23,7 +23,10 @@ public class QRCode {
 
 
     /**
-     * @param code
+     * @param code - the hash String of the QRCode
+     *
+     * This is the QRCode constructor. It takes in the hash String as an identifier of the
+     * QRCode and construct a QRCode object.
      */
     public QRCode(String code) {
         this.code = code;
@@ -65,6 +68,13 @@ public class QRCode {
         return (int) score;
     }
 
+    /**
+     * @param code - the hash String of a QRCode
+     * @return - the List<String>  object that represent the repeat in code
+     *
+     * This method takes in a hash String of QRCode object, and
+     * assists calculate_score method in calculating the score of a QRCode.
+     */
     private List<String> getRepeats(String code) {
         List<String> repeats = new ArrayList<>();
 
@@ -130,6 +140,13 @@ public class QRCode {
     }
 
 
+    /**
+     * @param code - the hash String of the code
+     * @return - the String visual representation of the code
+     *
+     *   This is a method that takes in a the hash String of the QRCode
+     *   and returns the String visual representation of that code.
+     */
     public String generateVisualRep(String code){
         String s1 = "       ____\n" ;
         String s2 = "      /    \\\n";
@@ -194,46 +211,117 @@ public class QRCode {
         return s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 ;
     }
 
-    
+
+    /**
+     * @param player - a String of Player's username
+     *
+     * This method takes in a String of a player and then add it to the
+     * QRCode playerList.
+     */
     public void addPlayer(String player) {
         this.playerList.add(player);
     }
 
+    /**
+     * @return - the hash String of a QRCode object
+     *
+     * This method returns the hash String of a QRCode object.
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     * @param code - the hash String of the QR code
+     *
+     * This method takes in a hash String and assign to the QRCode object.
+     */
     public void setCode(String code) {
         this.code = code;
     }
 
+    /**
+     * @return - the Score of the code
+     *
+     * This method returns the score of the QRCode.
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * @param score - the int score that needs to be set
+     *
+     * This method takes in an int and assign to the QRCode's score.
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
+
+    /**
+     * @param location - a String representing the geolocation
+     *
+     * This method takes in a String representing the geolocation of the object
+     * and then assign to the QRCode geolocation field.
+     */
     public void setGeolocation(String location) {this.geolocation = location;}
 
+    /**
+     * @param newList - the ArrayList<String> object representing the new list that need to be assigned
+     *
+     * This method takes in an ArrayList<String> object and assign it to playerlist field
+     * of the QRCode.
+     */
     public void setPlayerList(ArrayList<String> newList) {this.playerList = newList;}
 
+    /**
+     * @param data - a byte[] that store the image of the QRCode
+     *
+     * This method takes in an byte[] object that assign it to the imageMap
+     * field of the QRCode.
+     */
     public void setImageMap(byte[] data){this.imageMap = data;}
 
+    /**
+     * @return - the String name of the QRCode
+     *
+     * This method returns the String name of a QRCode object.
+     */
     public String getName() {
         return name;
     }
 
 
+    /**
+     * @return - an ArrayList<String> that represent the playerList of the QRCode.
+     *
+     * This method returns the playerList of the QRCode.
+     */
     public ArrayList<String> getPlayerList() {
         return playerList;
     }
 
+    /**
+     * @return - the String of geolocation of the QRCode
+     *
+     * This method returns the String Geolocation of the QRCode object.
+     */
     public String getGeolocation() { return geolocation; }
 
+
+    /**
+     * @return - the ArrayList<String> representing commentList of QRCode object
+     *
+     * This method returns the CommentList of the QRCode object.
+     */
     public ArrayList<String> getCommentList() {return commentList;}
 
+    /**
+     * @return - the String of imageMap of the QRCode
+     *
+     * This method returns the String imageMap of the QRCode object.
+     */
     public byte[] getImageMap() {return imageMap;}
 
 }
