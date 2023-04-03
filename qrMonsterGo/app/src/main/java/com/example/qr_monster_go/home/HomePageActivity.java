@@ -83,7 +83,7 @@ public class HomePageActivity extends AppCompatActivity {
                             visual.setText("No codes scanned");
                         }
                         else{
-                            visual.setText(codes.get(y).generateVisualRep(codes.get(y).code));
+                            visual.setText(codes.get(y).getName() + "\n\n\n\n" + codes.get(y).generateVisualRep(codes.get(y).code));
                         }
                         handler.postDelayed(this,2500); // set time here to refresh textView
                         x += 1;
