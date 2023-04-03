@@ -3,10 +3,12 @@
 <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/user_display"
-        android:layout_width="350dp"
+        android:layout_width="450dp"
         android:layout_height="40dp"
         android:padding="10dp"
-        android:textColor="@color/black">
+        android:textColor="@color/black"
+        android:background="?android:attr/activatedBackgroundIndicator">
+
 
 </TextView>
 
