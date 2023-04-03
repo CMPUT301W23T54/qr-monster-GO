@@ -142,6 +142,13 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Returns a list of the players stats to the view
+     * @param username
+     * @param x
+     * @return
+     */
     public ArrayList<Integer> playerStats(String username, int x){
         //Code collection database instance
         QrMonsterGoDB dbCodes = new QrMonsterGoDB();
@@ -192,6 +199,12 @@ public class HomePageActivity extends AppCompatActivity {
         });
         return data;
     }
+
+    /**
+     * Gets a list of all of the codes that the user has scanned and returns it to the view
+     * @param username
+     * @param callback
+     */
     private void getCodes(String username, dataCallback callback) {
         //Code collection database instance
         QrMonsterGoDB dbCodes = new QrMonsterGoDB();

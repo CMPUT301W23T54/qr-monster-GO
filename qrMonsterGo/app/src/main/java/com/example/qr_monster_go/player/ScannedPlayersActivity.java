@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Used in PlayerActivity
+ * Used in PlayerActivity, shows qr code information such as comments and other users who have scanned the code in the view
  */
 public class ScannedPlayersActivity extends AppCompatActivity {
     ArrayList<String> data;
