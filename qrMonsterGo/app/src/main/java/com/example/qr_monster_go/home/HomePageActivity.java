@@ -44,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
     TextView totalScore;
     TextView scannedCodes;
     TextView visual;
+    TextView visualname;
     ArrayList<QRCode> codes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,10 @@ public class HomePageActivity extends AppCompatActivity {
         MapButton = findViewById(R.id.map_location);
         AccountButton = findViewById(R.id.account_details);
         Leaderboards = findViewById(R.id.leaderboards);
+        visualname = findViewById(R.id.code_name);
         visual = findViewById(R.id.image);
         visual.setText("loading..."); // default value
+        visualname.setText("loading..."); // default value
         //Gets player stats and displays
         ArrayList<Integer> stats = new ArrayList<>();
         sharedPreferences = getSharedPreferences(sharedPreference, MODE_PRIVATE);
@@ -88,7 +91,9 @@ public class HomePageActivity extends AppCompatActivity {
                             visual.setText("No codes scanned");
                         }
                         else{
-                            visual.setText(codes.get(y).getName() + "\n\n\n\n" + codes.get(y).generateVisualRep(codes.get(y).code));
+//                            visual.setText(codes.get(y).getName() + "\n\n\n\n" + codes.get(y).generateVisualRep(codes.get(y).code));
+                            visualname.setText(codes.get(y).getName());
+                            visual.setText(codes.get(y).generateVisualRep(codes.get(y).code));
                         }
                         handler.postDelayed(this,2500); // set time here to refresh textView
                         x += 1;
