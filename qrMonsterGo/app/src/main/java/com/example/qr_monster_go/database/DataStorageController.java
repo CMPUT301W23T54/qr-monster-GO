@@ -26,8 +26,8 @@ public interface DataStorageController<T> {
 
 
     /**
-     * @param value -
-     * @return
+     * @param value - the id String of an element
+     * @return - the object of that id
      */
     T getElementOfId( String value);
 
