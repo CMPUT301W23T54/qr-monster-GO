@@ -3,7 +3,7 @@ package com.example.qr_monster_go;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule ;
 
-import com.example.qr_monster_go.home.SearchUsersActivity;
+import com.example.qr_monster_go.scan.ImageCaptureActivity;
 import com.robotium.solo.Solo ;
 
 import org.junit.After;
@@ -11,11 +11,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class SearchUsersActivityTest {
+public class ImageCaptureActivityTest {
     private Solo solo;
     @Rule
-    public ActivityTestRule<SearchUsersActivity> rule =
-            new ActivityTestRule<>(SearchUsersActivity.class, true, true);
+    public ActivityTestRule<ImageCaptureActivity> rule =
+            new ActivityTestRule<>(ImageCaptureActivity.class, true, true);
 
     /**
      * Runs before all tests and creates solo instance.
@@ -34,7 +34,16 @@ public class SearchUsersActivityTest {
      */
     @Test
     public void start() throws Exception {
-        SearchUsersActivity activity = rule.getActivity();
+        ImageCaptureActivity activity = rule.getActivity();
+    }
+
+    /**
+     * Checks return to Home page activity
+     */
+    @Test
+    public void checkTakePicture() {
+        solo.clickOnView(solo.getView(R.id.take_picture_button));
+        solo.assertCurrentActivity("Wrong Activity", ImageCaptureActivity.class);
     }
 
     /**
@@ -46,5 +55,4 @@ public class SearchUsersActivityTest {
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
     }
-
 }

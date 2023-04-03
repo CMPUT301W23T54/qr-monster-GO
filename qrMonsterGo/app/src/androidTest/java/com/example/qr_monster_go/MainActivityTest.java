@@ -1,5 +1,9 @@
 package com.example.qr_monster_go;
 
+import static org.junit.Assert.assertTrue;
+
+import android.widget.EditText;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule ;
 
@@ -38,21 +42,24 @@ public class MainActivityTest {
     }
 
 
-// note: sign up process can only be tested at the first time(uninstall app needed if already ran before), we can't run test it again and again.
-//    @Test
-//    public void checkSignup() {
-//        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-//        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-//
-//        //Get view for EditText and enter a user name
-//        solo.enterText((EditText) solo.getView(R.id.username_entry), "Apple");
-//        solo.clickOnButton(R.id.sign_up);//Select CONFIRM Button
-//        //solo.clearEditText((EditText) solo.getView(R.id.editText_name));//Clear the EditText
-//
-//        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);;
-//    }
+    /**
+     * Check a user sign up
+     */
+    @Test
+    public void checkSignup() {
+        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-
+        //Get view for EditText and enter a user name
+        solo.enterText((EditText) solo.getView(R.id.username_entry), "testcases");
+        solo.enterText((EditText) solo.getView(R.id.phone_entry), "1231231234");
+        solo.enterText((EditText) solo.getView(R.id.email_entry), "testing@gmail.com");
+        solo.clickOnView(solo.getView(R.id.sign_up));//Select Button
+        solo.clearEditText((EditText) solo.getView(R.id.username_entry));//Clear the EditText
+        solo.clearEditText((EditText) solo.getView(R.id.phone_entry));
+        solo.clearEditText((EditText) solo.getView(R.id.email_entry));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
 
     /**
      * Closes the activity after each test
