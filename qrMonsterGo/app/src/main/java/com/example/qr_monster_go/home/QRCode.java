@@ -2,6 +2,7 @@ package com.example.qr_monster_go.home;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -148,67 +149,49 @@ public class QRCode {
      *   and returns the String visual representation of that code.
      */
     public String generateVisualRep(String code){
-        String s1 = "       ____\n" ;
-        String s2 = "      /    \\\n";
-        String s3 = "    \\|      |/\n";
-        String s4 = "    @|  \\ / |@\n";
-        String s5 = "    /|  ◕ ◕ |\\\n" ;
-        String s6 = "     |   ^  |\n" ;
-        String s7 = "     |  \\_/ |\n" ;
-        String s8 = "      \\____/\n";
+        ArrayList<String> headVisual = new ArrayList<>();
+        ArrayList<String> eyebrowsVisual = new ArrayList<>();
+        ArrayList<String> eyesVisual = new ArrayList<>();
+        ArrayList<String> chinVisual = new ArrayList<>();
+        Collections.addAll(headVisual, "       ____\n", "       ||||\n", "       ^^^^\n", "       !_!_\n", "       @#@#\n", "       ****\n", "       <><>\n", "       &&&&\n", "       ~~~~\n");
+        Collections.addAll(eyebrowsVisual,"   @|  \\ / |@\n", "  @|~ \\ ~~|@\n" );
+        Collections.addAll(eyesVisual,"    /|  ◕ ◕   |\\\n", "    /|  - -   |\\\n", "    /|  > <   |\\\n", "    /|  # #   |\\\n" );
+        Collections.addAll(chinVisual,"     \\%%%%/\n", "     \\@!@!/\n", "     \\&&&&/\n", "     \\~~~~/\n" );
+        String s1 = "";
+        String s2 = "      /      \\\n";
+        String s3 = "    \\|        |/\n";
+        String s4 = "";
+        String s5 = "" ;
+        String s6 = "     |   ^    |\n" ;
+        String s7 = "     |  \\_/  |\n" ;
+        String s8 = "     \\____/\n";
+        int i = 0;
+        int y = 0;
+        String now = "";
+        while (i < 32){
+            now += code.charAt(i);
+            if (now.length() == 4){
+                int on = Integer.parseInt(now, 16);
+                now = "";
+                if(y == 0){
+                    s1 = headVisual.get(on % 10);
+                }
+                if (y == 3){
+                    s4 = eyebrowsVisual.get(on % 2);
+                }
+                if(y == 4){
+                    s5 = eyesVisual.get(on % 4);
+                }
+                if (y == 7){
+                    s8 = chinVisual.get(on % 4);
+                }
+                y += 1;
+            }
+            i+=1;
 
-
-        if(Character.isDigit(code.charAt(0))){
-            s1 = "       | | |\n";
-            s2 = "      ######\n";
-        }
-        if(Character.isLetterOrDigit(code.charAt(0))){
-            s1 = "/|   ----  /| \n";
-            s2 = "      ######  \n";
-        }
-        if((int)code.charAt(0) < 107){
-            s1 = "   {}{}||[]   \n";
-            s2 = "    -_    _-  \n";
-        }
-        if((int)code.charAt(0) < 115){
-            s1 = "   %^&*__))   \n";
-            s2 = "    &@&@**()  \n";
-        }
-        if(code.charAt(0) == '1' || code.charAt(0) == '2' || code.charAt(0) == '4'){
-            s1 = "       | | |\n";
-            s2 = "      ######\n";
-        }
-
-        if(code.charAt(1) == '1' || code.charAt(0) == '4'){
-            s3.replace('\\', ' ' );
-            s3.replace('/', ' ');
-            s4.replace('@', ' ');
-            s5.replace('\\', ' ' );
-            s5.replace('/', ' ');
-
-        }
-
-        if(code.charAt(2) == '1' || code.charAt(0) == '8'){
-            s4.replace('\\', '^');
-            s4.replace('/', '^');
         }
 
-        if(code.charAt(3) == '1' || code.charAt(0) == '5'){
-            s6 = "     |   0) |\n";
-        }
-        if(code.charAt(4) == '1' || code.charAt(0) == '2'){
-            s7 = "     |  (==)|\n";
-        }
-
-        if(code.charAt(5) == '1' || code.charAt(0) == '2'){
-            s8 = "     | //// |\n";
-        }
-
-        if(code.charAt(6) == '1' || code.charAt(0) == '2'){
-            s5.replace('◕', 'x');
-        }
-
-        return s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 ;
+        return s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
     }
 
 
