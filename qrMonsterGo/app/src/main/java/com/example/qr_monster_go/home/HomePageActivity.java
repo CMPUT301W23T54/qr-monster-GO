@@ -53,6 +53,9 @@ public class HomePageActivity extends AppCompatActivity {
         totalScore = findViewById(R.id.total_score);
         scannedCodes = findViewById(R.id.scanned_codes);
         username = findViewById(R.id.username);
+        // Setting textviews with default "loading..."
+        totalScore.setText("loading...");
+        scannedCodes.setText("loading...");
         //All buttons
         ScanCodeButton = findViewById(R.id.scan_code_button);
         SearchButton = findViewById(R.id.search_users);
@@ -60,6 +63,7 @@ public class HomePageActivity extends AppCompatActivity {
         AccountButton = findViewById(R.id.account_details);
         Leaderboards = findViewById(R.id.leaderboards);
         visual = findViewById(R.id.image);
+        visual.setText("loading..."); // default value
         //Gets player stats and displays
         ArrayList<Integer> stats = new ArrayList<>();
         sharedPreferences = getSharedPreferences(sharedPreference, MODE_PRIVATE);
