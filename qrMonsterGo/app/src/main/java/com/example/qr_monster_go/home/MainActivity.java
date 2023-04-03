@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         });               // onCreate
     }
     // username validation method
-    public boolean isValidUsername(String username) {
+    private boolean isValidUsername(String username) {
         // Check if username is alphanumeric
         if (!username.matches("[a-zA-Z0-9]+")) {
             return false;
