@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-//Leaderboards activity that shows user top scores in the application
+/**
+ * Leaderboards activity that shows user top scores in the application
+ */
 public class LeaderboardsActivity extends AppCompatActivity {
     ListView players;
     ArrayAdapter<Player> playerArrayAdapter;
@@ -43,7 +45,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboards);
-        getSupportActionBar().setTitle("Leaderboard"); // action bar title
+        getSupportActionBar().setTitle("QR Monster GO"); // action bar title
         players = findViewById(R.id.players);
         playersinfo = new ArrayList<>();
         playerArrayAdapter = new PlayersAdapter(this, playersinfo);
