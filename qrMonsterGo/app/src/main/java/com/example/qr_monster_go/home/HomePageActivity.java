@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import com.example.qr_monster_go.player.PlayerActivity;
 import com.example.qr_monster_go.R;
@@ -173,12 +175,12 @@ public class HomePageActivity extends AppCompatActivity {
                         data.add(sum);
                     }
                     if(x % 2 == 0){
-                        totalScore.setText("Highest Code Score " + data.get(0));
-                        scannedCodes.setText("Lowest Code Score " + data.get(1));
+                        totalScore.setText("Highest Code Score: " + data.get(0));
+                        scannedCodes.setText("Lowest Code Score: " + data.get(1));
                     }
                     else{
-                        totalScore.setText("Total Score " + data.get(2));
-                        scannedCodes.setText("Scanned " + data.get(3) + " codes");
+                        totalScore.setText("Total Score: " + data.get(2));
+                        scannedCodes.setText("Number of Codes Scanned: " + data.get(3));
                     }
                 }
             }
