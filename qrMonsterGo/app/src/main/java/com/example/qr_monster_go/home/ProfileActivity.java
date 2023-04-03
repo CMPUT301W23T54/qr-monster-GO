@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String getName = intent.getStringExtra("username");
         name.setText(getName);
+        getSupportActionBar().setTitle(getName + "'s Profile"); // action bar title
 
 
         ListView codeList = findViewById(R.id.code_list);

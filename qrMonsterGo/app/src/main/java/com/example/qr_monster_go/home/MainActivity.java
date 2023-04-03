@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         signUp = findViewById(R.id.sign_up);
         sharedPreferences = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 
+        // Change Action Bar Title
+        getSupportActionBar().setTitle("Welcome to QR Monster GO!");
         String existing = sharedPreferences.getString(key, null);
 
         //Checks if the user has signed up already

@@ -48,6 +48,7 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+        getSupportActionBar().setTitle("Profile"); // action bar title
         Intent intent = getIntent();
         String getName = intent.getStringExtra("username");
         username = findViewById(R.id.username);
