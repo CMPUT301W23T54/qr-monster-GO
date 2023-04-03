@@ -169,33 +169,15 @@ public class PlayerDataStorageController implements DataStorageController<Player
     }
 
 
+    /**
+     * @param playerId - the id of the document that needs to be removed
+     *
+     * This method implements interface but is not needed.
+     * It does nothing in the context when called.
+     */
     @Override
-    public void removeElement(String playerId) {
+    public void removeElement(String playerId){}
 
-    }
-
-
-    public void editUsername(){
-
-
-    }
-
-
-
-
-    @Override
-    public Player getElementOfKey(String key, String value) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Player> getSearchResultList( String searchKeywords) {
-        return null;
-    }
-
-    @Override
-    public void sortElement() {
-    }
 
 
 

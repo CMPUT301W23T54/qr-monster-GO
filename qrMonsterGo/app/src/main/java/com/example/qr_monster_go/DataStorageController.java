@@ -26,16 +26,11 @@ public interface DataStorageController<T> {
 
 
     /**
-     * @param value
+     * @param value -
      * @return
      */
     T getElementOfId( String value);
 
-    T getElementOfKey( String key, String value);
-
-    ArrayList<T> getSearchResultList(String searchKeywords);
-
-    void sortElement();
 
 
 
