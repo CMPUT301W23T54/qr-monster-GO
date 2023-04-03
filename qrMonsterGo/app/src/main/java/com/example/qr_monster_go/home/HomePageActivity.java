@@ -1,17 +1,24 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.home;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
+import com.example.qr_monster_go.player.PlayerActivity;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
+import com.example.qr_monster_go.maps.MapsActivity;
+import com.example.qr_monster_go.scan.ScanCodeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -20,7 +27,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 //Home page of the application. Allows user to navigate through different
 // functionalities and activities of the application through buttons and shows the user various player stats
@@ -73,8 +79,13 @@ public class HomePageActivity extends AppCompatActivity {
                     public void run() {
                         ArrayList<Integer> stats = new ArrayList<>();
                         stats = playerStats(sharedPreferences.getString(key, ""), x);
-                        visual.setText(codes.get(y).getName());
-                        handler.postDelayed(this,5000); // set time here to refresh textView
+                        if(codes.size() == 0){
+                            visual.setText("No codes scanned");
+                        }
+                        else{
+                            visual.setText(codes.get(y).getName() + "\n\n\n\n" + codes.get(y).generateVisualRep(codes.get(y).code));
+                        }
+                        handler.postDelayed(this,2500); // set time here to refresh textView
                         x += 1;
                         y += 1;
                         if(y == codes.size()){
@@ -164,12 +175,12 @@ public class HomePageActivity extends AppCompatActivity {
                         data.add(sum);
                     }
                     if(x % 2 == 0){
-                        totalScore.setText("Highest Code Score " + data.get(0));
-                        scannedCodes.setText("Lowest Code Score " + data.get(1));
+                        totalScore.setText("Highest Code Score: " + data.get(0));
+                        scannedCodes.setText("Lowest Code Score: " + data.get(1));
                     }
                     else{
-                        totalScore.setText("Total Score " + data.get(2));
-                        scannedCodes.setText("Scanned " + data.get(3) + " codes");
+                        totalScore.setText("Total Score: " + data.get(2));
+                        scannedCodes.setText("Number of Codes Scanned: " + data.get(3));
                     }
                 }
             }

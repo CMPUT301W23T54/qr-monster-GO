@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.home;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +10,8 @@ import java.util.List;
  * a SHA-256 hash from a scanned codes contents
  */
 public class QRCode {
-    String code;
-    int score;
+    public String code;
+    public int score;
     String name;
     ArrayList<String> playerList;  //stores the players who have Scanned the code
     String geolocation;  //for now geolocation is represented as a string
@@ -158,12 +158,28 @@ public class QRCode {
         String s8 = "      \\____/\n";
 
 
-        if(code.charAt(0) == '1'){
+        if(Character.isDigit(code.charAt(0))){
+            s1 = "       | | |\n";
+            s2 = "      ######\n";
+        }
+        if(Character.isLetterOrDigit(code.charAt(0))){
+            s1 = "/|   ----  /| \n";
+            s2 = "      ######  \n";
+        }
+        if((int)code.charAt(0) < 107){
+            s1 = "   {}{}||[]   \n";
+            s2 = "    -_    _-  \n";
+        }
+        if((int)code.charAt(0) < 115){
+            s1 = "   %^&*__))   \n";
+            s2 = "    &@&@**()  \n";
+        }
+        if(code.charAt(0) == '1' || code.charAt(0) == '2' || code.charAt(0) == '4'){
             s1 = "       | | |\n";
             s2 = "      ######\n";
         }
 
-        if(code.charAt(1) == '1'){
+        if(code.charAt(1) == '1' || code.charAt(0) == '4'){
             s3.replace('\\', ' ' );
             s3.replace('/', ' ');
             s4.replace('@', ' ');
@@ -172,23 +188,23 @@ public class QRCode {
 
         }
 
-        if(code.charAt(2) == '1'){
+        if(code.charAt(2) == '1' || code.charAt(0) == '8'){
             s4.replace('\\', '^');
             s4.replace('/', '^');
         }
 
-        if(code.charAt(3) == '1'){
+        if(code.charAt(3) == '1' || code.charAt(0) == '5'){
             s6 = "     |   0) |\n";
         }
-        if(code.charAt(4) == '1'){
+        if(code.charAt(4) == '1' || code.charAt(0) == '2'){
             s7 = "     |  (==)|\n";
         }
 
-        if(code.charAt(5) == '1'){
+        if(code.charAt(5) == '1' || code.charAt(0) == '2'){
             s8 = "     | //// |\n";
         }
 
-        if(code.charAt(6) == '1'){
+        if(code.charAt(6) == '1' || code.charAt(0) == '2'){
             s5.replace('◕', 'x');
         }
 

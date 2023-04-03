@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.database;
 
 
 import static android.content.ContentValues.TAG;
@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.qr_monster_go.player.Player;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +28,7 @@ import java.util.Map;
  * It has several methods either to add, delete, modify, query data from the
  * PlayerCollection in QrMonsterGo database
  */
-public class PlayerDataStorageController implements DataStorageController<Player>{
+public class PlayerDataStorageController implements DataStorageController<Player> {
 
     final private QrMonsterGoDB db; //the QRMonsterGoDB associated with the data controller.
 

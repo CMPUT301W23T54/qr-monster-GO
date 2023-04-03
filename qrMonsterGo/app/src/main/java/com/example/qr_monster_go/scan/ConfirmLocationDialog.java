@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.scan;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -38,8 +38,6 @@ public class ConfirmLocationDialog extends DialogFragment {
                     assert parent != null;
                     parent.setCurrentLocation();
 
-                    DialogFragment confirmImageDialog = new ConfirmImageDialog();
-                    confirmImageDialog.show(((ScanCodeActivity) getActivity()).getSupportFragmentManager(), "image");
                 })
                 .create();
     }

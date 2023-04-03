@@ -1,17 +1,20 @@
 package com.example.qr_monster_go;
 
 import android.app.Activity;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import android.widget.EditText;
-import android.widget.ListView;
+
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.home.ProfileActivity;
+import com.example.qr_monster_go.home.SearchUsersActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -48,9 +51,7 @@ public class SearchUsersTest {
 
     /**
      * Starts on the SearchUsers Activity, enters a name, clicks on the name,
-     * view the profile, and return back to search activity
-     * <p>
-     * Future work: Separate the profile activity into it's own test
+     * and return back to search activity
      */
     @Test
     public void checkSearch() {
@@ -63,15 +64,39 @@ public class SearchUsersTest {
         // capybara is a user that is in the database
         assertTrue(solo.waitForText("capybara", 1, 2000));
 
+//        solo.clickOnView(solo.getView(R.id.back_button)); // Exit player's profile
+//        solo.assertCurrentActivity("Wrong Activity", SearchUsersActivity.class);
+    }
 
-        //
-        solo.clickOnView(solo.getView(R.id.users)); // Select user
+    /**
+     * Checks a user's profile
+     */
+    @Test
+    public void checkProfileActivity() {
+        solo.assertCurrentActivity("Wrong Activity", SearchUsersActivity.class);
+
+        solo.enterText((EditText) solo.getView(R.id.searched_user), "capybara");
+        solo.clickOnView(solo.getView(R.id.search_users_button)); // Select SEARCH button
+        solo.clearEditText((EditText) solo.getView(R.id.searched_user)); // Clear EditText
+
+        // capybara is a user that is in the database
+        assertTrue(solo.waitForText("capybara", 1, 2000));
+
+        solo.clickInList(0); // Select user
         solo.clickOnView(solo.getView(R.id.view_profile_button)); // Enter Profile
 
         solo.assertCurrentActivity("Wrong Activity", ProfileActivity.class);
+    }
 
-        solo.clickOnView(solo.getView(R.id.back_button)); // Exit player's profile
+    /**
+     * Checks return to Home page activity
+     */
+    @Test
+    public void checkReturn() {
         solo.assertCurrentActivity("Wrong Activity", SearchUsersActivity.class);
+        solo.clickOnView(solo.getView(R.id.return_button)); // Exit player's profile
+        solo.waitForActivity(HomePageActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", HomePageActivity.class);
     }
 
     /**

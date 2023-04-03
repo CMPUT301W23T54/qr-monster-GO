@@ -4,20 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchUsersActivity">
+    tools:context=".home.SearchUsersActivity">
 
     <ImageButton
         android:id="@+id/return_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        android:contentDescription="Return to home screen"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.15"/>
 
     <ImageButton
         android:id="@+id/search_users_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_search" />
@@ -27,22 +32,32 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/search_users_button"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="10dp">
     </EditText>
 
     <ListView
         android:id="@+id/users"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searched_user">
 
     </ListView>
 
     <ImageButton
         android:id="@+id/view_profile_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/return_button"
-        app:srcCompat="@android:drawable/ic_menu_view" />
+        app:srcCompat="@android:drawable/ic_menu_view"
+        android:contentDescription="View profile"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.15"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

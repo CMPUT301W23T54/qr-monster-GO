@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +14,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Locale;
+
 //Allows users to search for others in thee application and view other players profiles
 public class SearchUsersActivity extends AppCompatActivity {
     ImageButton returnButton;
@@ -60,21 +61,23 @@ public class SearchUsersActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 QrMonsterGoDB db = new QrMonsterGoDB();
                 String user = searchedUser.getText().toString();
                 String TAG = "DocSnippets";
-                // TODO: 3/13/2023 Need to add it so we can substring search and lowercase checks 
                 if(user.length() > 0){
                     data.clear();
                     users.setAdapter(usersAdapter);
                     CollectionReference usersReference = db.getCollectionReference("PlayerCollection");
-                    usersReference.whereEqualTo("username", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    usersReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String name = document.get("username").toString();
-                                    data.add(name);
+                                    if (name.contains(user)){
+                                        data.add(name);
+                                    }
                                 }
                                 users.setAdapter(usersAdapter);
                                 if(data.size() == 0){
@@ -86,6 +89,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
                         }
                     });
+                    usersAdapter.notifyDataSetChanged();
                 }
                 else{
                     Toast.makeText(SearchUsersActivity.this, "Please enter a username to search", Toast.LENGTH_LONG).show();
@@ -105,5 +109,31 @@ public class SearchUsersActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getCodes(String username, dataCallback callback) {
+        //Code collection database instance
+        QrMonsterGoDB dbCodes = new QrMonsterGoDB();
+        CollectionReference codes = dbCodes.getCollectionReference("CodeCollection");
+
+        codes.whereArrayContains("playerList", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<QRCode> data = new ArrayList<>();
+                if(task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d((String) document.get("code"), "onComplete: codeFound");
+                        data.add(new QRCode((String) document.get("code")));
+                    }
+                    Log.d(String.valueOf(data), "onComplete: dataList");
+                }
+                else {
+                    Log.d("fail", "getCodes: fail");
+                }
+
+                callback.onCallBack(data);
+            }
+        });
+
     }
 }
