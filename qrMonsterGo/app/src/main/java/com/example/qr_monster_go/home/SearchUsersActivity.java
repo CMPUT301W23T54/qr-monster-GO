@@ -1,4 +1,4 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +14,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Locale;
+
 //Allows users to search for others in thee application and view other players profiles
 public class SearchUsersActivity extends AppCompatActivity {
     ImageButton returnButton;

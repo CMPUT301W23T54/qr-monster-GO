@@ -1,11 +1,10 @@
-package com.example.qr_monster_go;
+package com.example.qr_monster_go.scan;
 
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 //import android.location.LocationRequest;
@@ -23,11 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.SharedPreferencesKt;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.qr_monster_go.home.HomePageActivity;
+import com.example.qr_monster_go.home.QRCode;
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.database.CodeDataStorageController;
+import com.example.qr_monster_go.database.QrMonsterGoDB;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationCallback;
@@ -98,14 +101,18 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
+
+                        // if this code has already been found by the user or another player
                         if (document.exists()) {
                             ArrayList<String> playerList = (ArrayList<String>) document.get("playerList");
+                            // check if user has already scanned the code
                             if (playerList.contains(getIntent().getExtras().getString("username"))) {
                                 Toast.makeText(getApplicationContext(), "You have already scanned this code", Toast.LENGTH_LONG).show();
                             }
                             else {
                                 code.setPlayerList(playerList);
 
+                                // add database values to code if none were added by this user
                                 if (Glocation == null) {
                                     Glocation = (String) document.get("location");
                                 }
@@ -113,6 +120,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                     GImageMap =  Base64.decode((String) document.get("imageMap"), Base64.DEFAULT);
                                 }
 
+                                // update all data on the code and upload to database
                                 code.addPlayer(getIntent().getExtras().getString("username"));
                                 code.setGeolocation(Glocation);
                                 code.setImageMap(GImageMap);
@@ -123,6 +131,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
                         }
                         else {
+                            // update all data on the code and upload to database
                             code.addPlayer(getIntent().getExtras().getString("username"));
                             code.setGeolocation(Glocation);
                             code.setImageMap(GImageMap);
@@ -246,6 +255,9 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
                                 Glocation = String.valueOf(latitude) +"X"+String.valueOf(longitude);
 
                                 Log.d("location", Glocation);
+
+                                DialogFragment confirmImageDialog = new ConfirmImageDialog();
+                                confirmImageDialog.show(getSupportFragmentManager(), "image");
                             }
                         }
                     }, Looper.getMainLooper());
@@ -313,6 +325,10 @@ public class ScanCodeActivity extends AppCompatActivity implements ScanResultRec
 
     }
 
+    /**
+     * Function launches the image capturing activity
+     * called through ConfirmImageDialog
+     */
     public void startImageActivity() {
         Intent intent = new Intent(ScanCodeActivity.this, ImageCaptureActivity.class);
         startActivityForResult(intent, 0);

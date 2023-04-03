@@ -1,20 +1,23 @@
-package com.example.qr_monster_go;
-
-import static android.content.ContentValues.TAG;
+package com.example.qr_monster_go.home;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.qr_monster_go.R;
+import com.example.qr_monster_go.player.Player;
+
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Used in LeaderboardsActivity
+ */
 public class PlayersAdapter extends ArrayAdapter<Player> {
     private ArrayList<Player> users;
     private Context context;
