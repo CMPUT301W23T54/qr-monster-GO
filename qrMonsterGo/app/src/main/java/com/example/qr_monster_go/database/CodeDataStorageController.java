@@ -190,74 +190,16 @@ public class CodeDataStorageController implements DataStorageController<QRCode> 
     }
 
 
-
-
     /**
-    public void removePlayerFromPlayerList(String code, String username){
-        DocumentReference codeRef = db.getDocumentReference("code","CodeCollection");
-        codeRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot codeSnapshot) {
-                if(codeSnapshot.getData().get("playerList").equals(new ArrayList<String>().add(username)))
-                    removeElement(code);
-                // delete the document if code playerList contains only the specified player
-                else {
-                    codeRef.update("playerList", FieldValue.arrayRemove("username"))
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "Player in PlayerList successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error deleting player from the player list", e);
-                                }
-                            });
-
-                }
-                //else update the playerList in code document
-            }//on success
-        })//on success listener
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error getting snap", e);
-                }
-            });//on failure listener
-    }//
-
-
-
-*/
-
-
-
-
-
-    @Override
-    public QRCode getElementOfKey(String key, String value) {
-
-        return null;
-
-    }
-
-
+     * @param code - the hashString of a QRCode
+     * @return - the ArrayList<String> of players who has the QRCode scanned
+     *
+     * This method takes in the String of code object and return the playerList who
+     * has collected the QRCode.
+     */
     public ArrayList<String> getPlayerWhoHasCode(String code){
         return getElementOfId(code).getPlayerList();
     }//getPlayerWhoHasCode
-
-    @Override
-    public ArrayList<QRCode> getSearchResultList(String searchKeywords) {
-        return null;
-    }
-
-
-    @Override
-    public void sortElement() {
-    }
-
 
 
 

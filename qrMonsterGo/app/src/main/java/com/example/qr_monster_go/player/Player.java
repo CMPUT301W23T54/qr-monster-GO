@@ -124,63 +124,25 @@ public class Player {
         return 0;
     }
 
+    /**
+     * @return - the saved CodeList of a player
+     *
+     * This method returns the savedCodeList of a player.
+     */
     public List<String> getSavedCodeList() {
         return this.savedCodeList;
     }
 
 
+    /**
+     * @param savedCodeList - the List<String> representing the code saved by the player
+     *
+     * This method takes in a list of code and set it to player's codeList.
+     */
     public void setSavedCodeList(List<String> savedCodeList) {
         this.savedCodeList = savedCodeList;
     }
 
-    /**
-     * populate Player class properties from Firebase PlayersAdapter collection queried by username
-    public void populateFromFirebase() {
-        // Access a Cloud Firestore instance
-        db = FirebaseFirestore.getInstance();
-        // Get a top level reference to the collection
-        final CollectionReference usersRef = db.collection("PlayersAdapter");
-        // query Firebase by username
-        Query queryByUserName = usersRef.whereEqualTo("username", this.username);
-
-        // add listener
-        queryByUserName
-                .limit(1)       // limit to only 1 player, as user sign up process guarantees username uniqueness
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && (!task.getResult().isEmpty())) {
-                            // get the first element from the query result
-                            QueryDocumentSnapshot document = (QueryDocumentSnapshot) task.getResult().getDocuments().get(0);
-                            if (document.exists()) {
-                                // start to set class field value
-
-                                // read the string directly
-                                setEmail(document.get("email").toString());
-                                setPhone(document.get("phone").toString());
-
-                                // lambda expression, if no such a field, then default to 0, otherwise cast to an integer
-                                setTotalScore(document.get("totalScore") == null ? 0 : (Integer) document.get("totalScore"));
-                                setTotalScannedCodes(document.get("totalScannedCodes") == null ? 0 : (Integer) document.get("totalScannedCodes"));
-
-                                // todo: get the QR codes, need to get codes sub collection, need to clarify how it is defined
-                                // document.get("codes").toString();
-
-
-                                Log.d(TAG, "DocumentSnapshot data: ${document.data}");
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                }); //addOnCompleteListener
-    }
-
-
-     */
 
 }
 
