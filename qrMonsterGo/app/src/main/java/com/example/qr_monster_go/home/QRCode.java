@@ -153,7 +153,7 @@ public class QRCode {
         ArrayList<String> eyebrowsVisual = new ArrayList<>();
         ArrayList<String> eyesVisual = new ArrayList<>();
         ArrayList<String> chinVisual = new ArrayList<>();
-        Collections.addAll(headVisual, "       ____\n", "       ||||\n", "       ^^^^\n", "       !_!_\n", "       @#@#\n", "       ****\n", "       <><>\n", "       &&&&\n", "       ~~~~\n");
+        Collections.addAll(headVisual, "       ____\n", "       ||||\n", "       ^^^^\n", "       !_!_\n", "       @#@#\n", "       ****\n", "       <><>\n", "       &&&&\n", "       ~~~~\n", "       {{}}\n");
         Collections.addAll(eyebrowsVisual,"   @|  \\ / |@\n", "  @|~  ~|@\n" );
         Collections.addAll(eyesVisual,"    /|  ◕ ◕  |\\\n", "    /|  - -   |\\\n", "    /|  > <  |\\\n", "    /|  # #  |\\\n" );
         Collections.addAll(chinVisual,"     \\%%%%/\n", "     \\@!@!/\n", "     \\&&&&/\n", "     \\~~~~/\n" );
