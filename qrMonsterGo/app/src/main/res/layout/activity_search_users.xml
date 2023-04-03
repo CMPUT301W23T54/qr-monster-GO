@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="50dp"
         android:paddingBottom="50dp"
+        android:choiceMode="singleChoice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searched_user">
