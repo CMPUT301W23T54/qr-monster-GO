@@ -23,7 +23,9 @@
         android:layout_width="350dp"
         android:layout_height="25dp"
         android:layout_marginTop="30dp"
+        android:textSize="18dp"
         android:text="QR Codes: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ranking"
         app:layout_constraintBottom_toTopOf="@+id/codes"/>
@@ -62,7 +64,6 @@
         android:text=""
         android:textSize="22dp"
         android:textColor="@android:color/black"
-        android:background="@color/yellow"
         android:layout_gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toEndOf="parent"
