@@ -62,7 +62,12 @@ public class LeaderboardsActivity extends AppCompatActivity {
                                             Collections.sort(playersinfo, new Comparator<Player>() {
                                                 @Override
                                                 public int compare(Player player, Player player1) {
-                                                    return player1.getTotalScore() < player.getTotalScore() ? -1 : 1;
+                                                    if (player1.getTotalScore() == player.getTotalScore()) {
+                                                        return 0;
+                                                    }
+                                                    else {
+                                                        return player1.getTotalScore() < player.getTotalScore() ? -1 : 1;
+                                                    }
                                                 }
                                             });
                                             playerArrayAdapter.notifyDataSetChanged();
