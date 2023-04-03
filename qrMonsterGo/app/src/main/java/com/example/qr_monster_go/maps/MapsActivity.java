@@ -19,6 +19,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.example.qr_monster_go.databinding.ActivityMapsBinding;
 import com.google.android.material.navigation.NavigationBarView;
 
+/**
+ * This class is called upon to activate the maps activity and will instantiate MapsFragment
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;
@@ -54,6 +57,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mapFragment.getMapAsync(this);
     }
 
+    /**
+     *
+     * @param fragment
+     */
     private void ReplaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -62,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Doesn't do anything (I think)
+     * No Specific Purpose
      * @param googleMap
      */
     @Override

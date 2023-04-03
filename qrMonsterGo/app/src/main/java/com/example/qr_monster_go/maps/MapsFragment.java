@@ -52,6 +52,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is a fragment that hosts google maps
+ * It also implements functionality for searching for a location and viewing pins/markers
+ * that either represent the location of the user, search result, or qr code
+ */
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     FragmentMapsBinding binding;
@@ -83,6 +88,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    /**
+     * Initializes the map along with the search bar
+     */
     private void mapInitialize() {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(5000);
@@ -105,6 +113,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
     }
 
+    /**
+     * This method will take in whatever the user has entered into the search bar,
+     * use geocoder class to obtain the actual location, and then move the map view
+     * to that specific location while adding a red marker there
+     */
     private void goToSearchLocation() {
         String searchLocation = binding.searchEdt.getText().toString();
         Geocoder geocoder = new Geocoder(getContext());
@@ -131,13 +144,24 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * Method used to update the map view/camera to a specific pair of coordinates
+     * @param latitude
+     * @param longitude
+     * @param v
+     */
     private void gotoLatLng(double latitude, double longitude, float v) {
         LatLng latLng = new LatLng(latitude, longitude);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng,v);
         mMap.animateCamera(update);
     }
 
-
+    /**
+     * Called when the map view is ready
+     * It will move the map to the user's location (if permissions are enabled)
+     * It will place down green markers in the locations of qr codes
+     * @param googleMap
+     */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         Log.d("map", "MapsFragment onMapReady");
